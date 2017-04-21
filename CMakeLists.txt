@@ -5,6 +5,7 @@ add_definitions (-std=c++11 -O3 -Os)
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_library (ObjSDL
+    color_names.cc color.cc color.hh  # color_names provides the values for the named colors
     short_types.cc short_types.hh  # header only
 )
 
