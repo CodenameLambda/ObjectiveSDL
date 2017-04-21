@@ -12,7 +12,7 @@ class Clock {
     Clock();
 
     std::chrono::milliseconds tick();
-    std::chrono::milliseconds tick(float fps);
+    std::chrono::milliseconds tick(const float fps);
 };
 
 #endif

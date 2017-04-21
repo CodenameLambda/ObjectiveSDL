@@ -10,7 +10,7 @@ struct Vector2s {
     size_t x;
     size_t y;
 
-    size_t& operator[](size_t index);
+    const size_t& operator[](const size_t index) const;
 };
 
 struct Surface {

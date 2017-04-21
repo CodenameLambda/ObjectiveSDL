@@ -4,7 +4,7 @@
 #include <vector>
 
 
-size_t& Vector2s::operator[](size_t index) {
+const size_t& Vector2s::operator[](const size_t index) const {
     if (index == 0)
         return this->x;
     else
@@ -15,7 +15,7 @@ size_t& Vector2s::operator[](size_t index) {
 namespace SDL {
     namespace _implementation {
         namespace cursor {
-            Pixel char_to_pixel(char c) {
+            Pixel char_to_pixel(const char c) {
                 switch (c) {
                     case 'X':
                         return Pixel::X;
@@ -29,7 +29,7 @@ namespace SDL {
                 }
             }
 
-            std::vector<std::string> split(std::string s) {
+            std::vector<std::string> split(const std::string s) {
                 std::vector<std::string> out;
                 std::string current = "";
                 for (const char c : s)
@@ -45,28 +45,7 @@ namespace SDL {
     }
 
     template <typename T>
-    SDL_Cursor* string_list_to_cursor(T l, Vector2s c) {
-        auto current_line = l.begin();
-        auto current_element = current_line->begin();
-
-        return build_cursor(
-            get_size(l),
-            c,
-            line_walker(current_line, current_element, l),
-            [&](bool first) -> std::pair<bool, _implementation::cursor::Pixel> {
-                if (!first)
-                    ++ current_element;
-                if (current_element == current_line->end())
-                    return {true, _implementation::cursor::Pixel::_};
-                else {
-                    return {false, _implementation::cursor::char_to_pixel(*current_element)};
-                }
-            }
-        );
-    }
-
-    template <typename T>
-    Vector2s get_size(T container) {
+    Vector2s get_size(const T& container) {
         size_t width = 0;
         for (const auto& i : container) {
             size_t local_width = i.size();
@@ -84,7 +63,7 @@ namespace SDL {
     }
 
     template <typename T, typename U, typename V>
-    auto line_walker(T& iterator, U& sub_iterator, V& container) {
+    auto line_walker(T& iterator, U& sub_iterator, const V& container) {
         return [=](bool first) mutable -> bool {
             if (!first) {
                 ++ iterator;
@@ -101,7 +80,7 @@ namespace SDL {
     }
 
     template <typename T, typename U>
-    SDL_Cursor* build_cursor(Vector2s s, Vector2s c, T next_line, U next_element) {
+    SDL_Cursor* build_cursor(const Vector2s s, const Vector2s c, T next_line, U next_element) {
         // U has the form std::pair<bool, Pixel>(),
         // where the first entry is true if the iterator has iterated throug all elements
         // T only returns if there is a next line or not
@@ -158,6 +137,27 @@ namespace SDL {
         }
 
         return SDL_CreateCursor(data, mask, s[0], s[1], c[0], c[1]);
+    }
+
+    template <typename T>
+    SDL_Cursor* string_list_to_cursor(const T& l, const Vector2s c) {
+        auto current_line = l.begin();
+        auto current_element = current_line->begin();
+
+        return build_cursor(
+            get_size(l),
+            c,
+            line_walker(current_line, current_element, l),
+            [&](bool first) -> std::pair<bool, _implementation::cursor::Pixel> {
+                if (!first)
+                    ++ current_element;
+                if (current_element == current_line->end())
+                    return {true, _implementation::cursor::Pixel::_};
+                else {
+                    return {false, _implementation::cursor::char_to_pixel(*current_element)};
+                }
+            }
+        );
     }
 
     namespace cursor_pixels {

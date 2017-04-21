@@ -8,7 +8,7 @@ Clock::Clock() {
 }
 
 std::chrono::milliseconds Clock::tick() {
-    auto current = std::chrono::system_clock::now();
+    const auto current = std::chrono::system_clock::now();
     std::chrono::milliseconds delta = std::chrono::duration_cast<std::chrono::milliseconds>(
             current - this->last
     );
@@ -16,10 +16,10 @@ std::chrono::milliseconds Clock::tick() {
     return delta;
 }
 
-std::chrono::milliseconds Clock::tick(float fps) {
-    auto delta = this->tick();
-    auto min_delta = std::chrono::duration<double>(1.0 / double(fps));
-    auto delta_delta = delta - min_delta;
+std::chrono::milliseconds Clock::tick(const float fps) {
+    const auto delta = this->tick();
+    const auto min_delta = std::chrono::duration<double>(1.0 / double(fps));
+    const auto delta_delta = delta - min_delta;
     if (delta_delta > std::chrono::duration<double>(0.)) {
         std::this_thread::sleep_for(delta_delta);
         return std::chrono::duration_cast<std::chrono::milliseconds>(min_delta);

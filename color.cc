@@ -5,7 +5,7 @@
 namespace SDL {
     namespace _implementation {
         namespace color {
-            uchar abs(short x) {
+            uchar abs(cshort x) {
                 if (x >= 0)
                     return x;
                 else
@@ -94,7 +94,7 @@ namespace SDL {
         this->a = a;
     }
 
-    Color::Color(uchar luminocity, cuchar a) {
+    Color::Color(cuchar luminocity, cuchar a) {
         this->r = luminocity;
         this->g = luminocity;
         this->b = luminocity;
@@ -172,12 +172,12 @@ namespace SDL {
         return {h, s, v};
     }
 
-    Color Color::from_hsv(uchar h, uchar s, uchar v, uchar a) {
+    Color Color::from_hsv(cuchar h, cuchar s, cuchar v, cuchar a) {
         if (s == 0)
             return {v, v, v};
 
         uchar hi = float(h) / 42.5f;
-        float f = float(h) / 42.5f - float(hi);
+        cfloat f = float(h) / 42.5f - float(hi);
         uchar p = float(v) * (255.f - float(s)) / 255.f;
         uchar q = float(v) * (255.f - float(s) * f) / 255.f;
         uchar t = float(v) * (255.f - float(s) * (1.f - f)) / 255.f;
@@ -221,7 +221,7 @@ namespace SDL {
         return {h, s, l};
     }
 
-    Color Color::from_hsl(uchar h, uchar s, uchar l, uchar a) {
+    Color Color::from_hsl(cuchar h, cuchar s, cuchar l, cuchar a) {
         if (s == 0)
             return {l, l, l};
 
