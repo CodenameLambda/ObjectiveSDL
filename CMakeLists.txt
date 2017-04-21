@@ -9,6 +9,7 @@ add_library (ObjSDL
     cursor.cc cursor.hh
     clock.cc clock.hh
     short_types.cc short_types.hh  # header only
+    clipboard.cc clipboard.hh
 )
 
 include (cmake/FindSDL2.cmake)
