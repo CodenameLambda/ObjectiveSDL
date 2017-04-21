@@ -1,11 +1,12 @@
 cmake_minimum_required (VERSION 2.8)
 
-add_definitions (-std=c++11 -O3 -Os)
+add_definitions (-std=c++14 -O3 -Os)
 
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_library (ObjSDL
     color_names.cc color.cc color.hh  # color_names provides the values for the named colors
+    cursor.cc cursor.hh
     short_types.cc short_types.hh  # header only
 )
 
