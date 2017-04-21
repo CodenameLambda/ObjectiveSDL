@@ -7,6 +7,7 @@ set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_library (ObjSDL
     color_names.cc color.cc color.hh  # color_names provides the values for the named colors
     cursor.cc cursor.hh
+    clock.cc clock.hh
     short_types.cc short_types.hh  # header only
 )
 
