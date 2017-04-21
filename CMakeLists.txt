@@ -4,7 +4,9 @@ add_definitions (-std=c++11 -O3 -Os)
 
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_library (ObjSDL)
+add_library (ObjSDL
+    short_types.cc short_types.hh  # header only
+)
 
 include (cmake/FindSDL2.cmake)
 
