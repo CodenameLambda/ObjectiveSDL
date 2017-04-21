@@ -41,7 +41,7 @@ namespace SDL {
 
     class Cursor {
         SDL_Cursor* cursor;
-        bool has_control = true;
+        bool has_control;
 
         public:
         Cursor();  // default cursor (arrow)

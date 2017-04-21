@@ -169,11 +169,13 @@ namespace SDL {
 
     Cursor::Cursor() {
         this->cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
+        this->has_control = true;
     }
 
     Cursor::Cursor(Cursor&& other) {
         this->cursor = other.cursor;
         other.has_control = false;
+        this->has_control = true;
     }
 
     Cursor::Cursor(
@@ -196,6 +198,7 @@ namespace SDL {
                     return {false, *current_element};
             }
         );
+        this->has_control = true;
     }
 
     Cursor::Cursor(
@@ -203,6 +206,7 @@ namespace SDL {
         const Vector2s c
     ) {
         this->cursor = string_list_to_cursor(l, c);
+        this->has_control = true;
     }
 
     Cursor::Cursor(
@@ -236,22 +240,26 @@ namespace SDL {
                 }
             }
         );
+        this->has_control = true;
     }
 
     Cursor::Cursor(const std::string s, const Vector2s c) {
         this->cursor = string_list_to_cursor(_implementation::cursor::split(s), c);
+        this->has_control = true;
     }
 
     Cursor::Cursor(Surface& s, Vector2s c) {
         this->cursor = SDL_CreateColorCursor(s.sdl_surface, c[0], c[1]);
+        this->has_control = true;
     }
 
     Cursor::Cursor(const SDL_SystemCursor c) {
         this->cursor = SDL_CreateSystemCursor(c);
+        this->has_control = true;
     }
 
     Cursor::~Cursor() {
-        if (this->has_control)
+        if (this->has_control)  // We don't want to free cursors that were moved.
             SDL_FreeCursor(this->cursor);
     }
 
