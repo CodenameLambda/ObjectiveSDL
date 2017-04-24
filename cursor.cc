@@ -76,8 +76,8 @@ namespace SDL {
         // U has the form std::pair<bool, Pixel>(),
         // where the first entry is true if the iterator has iterated throug all elements
         // T only returns if there is a next line or not
-        Uint8 data[size_t(s[0] * s[1] / 8)];
-        Uint8 mask[size_t(s[0] * s[1] / 8)];
+        Uint8 data[size_t(x(s) * y(s) / 8)];
+        Uint8 mask[size_t(x(s) * y(s) / 8)];
 
         size_t index = -1;  // equals max_value(size_t), but gets wrapped when incremented.
         // col is 0 at first, so there is no problem.
@@ -116,7 +116,7 @@ namespace SDL {
                 std::tie(line_done, i) = next_element(false);
             }
 
-            for (; col < s[0]; ++ col)
+            for (; col < x(s); ++ col)
                 if (col % 8 != 0) {
                     data[index] <<= 1;
                     mask[index] <<= 1;
@@ -128,7 +128,7 @@ namespace SDL {
             done = next_line(false);
         }
 
-        return SDL_CreateCursor(data, mask, s[0], s[1], c[0], c[1]);
+        return SDL_CreateCursor(data, mask, x(s), y(s), x(c), y(c));
     }
 
     template <typename T>
@@ -241,7 +241,7 @@ namespace SDL {
     }
 
     Cursor::Cursor(Surface& s, Vector2S c) {
-        this->cursor = SDL_CreateColorCursor(s.sdl_surface, c[0], c[1]);
+        this->cursor = SDL_CreateColorCursor(s.sdl_surface, x(c), y(c));
         this->has_control = true;
     }
 
