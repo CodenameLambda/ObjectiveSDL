@@ -10,18 +10,23 @@ class Vector {
     public:
     static constexpr size_t dimension = dim;
 
-    Vector(bool zero_initialized=true) {
+    Vector(const bool zero_initialized=true) {
         if (zero_initialized)
             this->data = {0};
     }
 
-    Vector(std::initializer_list<T> data) {
-        this->data = data;
-    }
+    Vector(const std::initializer_list<T>& data)
+        : Vector(data.begin(), data.end()) {}
 
     template <typename I, typename J>
-    Vector(I begin, J end) {
-        this->data = std::array<T, dim>(begin, end);
+    Vector(I begin, const J& end) {
+        this->data = {0};
+        size_t index = 0;
+        while(begin != end) {
+            this->data[index] = *begin;
+            ++ begin;
+            ++ index;
+        }
     }
 
     typename std::array<T, dim>::iterator begin() {
@@ -62,11 +67,11 @@ class Vector {
         return std::sqrt(sum);
     }
 
-    T& operator[](size_t index) {
+    T& operator[](const size_t index) {
         return data[index];
     }
 
-    const T& operator[](size_t index) const {
+    const T& operator[](const size_t index) const {
         return data[index];
     }
 
@@ -81,7 +86,11 @@ class Vector {
         return out;
     }
 
-    decltype(data) _get_data() {
+    decltype(data)& _get_data() {
+        return this->data;
+    }
+
+    const decltype(data)& _get_data() const {
         return this->data;
     }
 };
@@ -95,7 +104,7 @@ namespace std {
 
 
     template <size_t id, typename T, size_t num>
-    const T& get(Vector<num, T>& v) {
+    const T& get(const Vector<num, T>& v) {
         return std::get<id>(v._get_data());
     }
 }
