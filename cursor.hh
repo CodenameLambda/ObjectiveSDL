@@ -4,14 +4,7 @@
 #include <SDL.h>
 #include <initializer_list>
 #include <string>
-
-struct Vector2s {
-    // TODO: Remove in favour of the real vector class group
-    size_t x;
-    size_t y;
-
-    const size_t& operator[](const size_t index) const;
-};
+#include "geometry.hh"
 
 struct Surface {
     // TODO: Remove in favour of the real surface class
@@ -53,23 +46,23 @@ namespace SDL {
         // the center is positioned relative to the top left
         Cursor(
             const std::initializer_list<std::initializer_list<Pixel>>,
-            const Vector2s center={0, 0}
+            const Vector2S center={0, 0}
         );
 
         Cursor(
             const std::initializer_list<std::string>,
-            const Vector2s center={0, 0}
+            const Vector2S center={0, 0}
         );
 
-        Cursor(std::string, const Vector2s center={0, 0});
+        Cursor(std::string, const Vector2S center={0, 0});
 
         Cursor(
             const std::string,
             size_t width,
-            const Vector2s center={0, 0}
+            const Vector2S center={0, 0}
         );  // If you don't use newlines
 
-        Cursor(Surface&, const Vector2s center={0, 0});
+        Cursor(Surface&, const Vector2S center={0, 0});
 
         private:
         Cursor(const SDL_SystemCursor);

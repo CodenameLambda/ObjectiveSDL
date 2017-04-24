@@ -4,14 +4,6 @@
 #include <vector>
 
 
-const size_t& Vector2s::operator[](const size_t index) const {
-    if (index == 0)
-        return this->x;
-    else
-        return this->y;
-}
-
-
 namespace SDL {
     namespace _implementation {
         namespace cursor {
@@ -45,7 +37,7 @@ namespace SDL {
     }
 
     template <typename T>
-    Vector2s get_size(const T& container) {
+    Vector2S get_size(const T& container) {
         size_t width = 0;
         for (const auto& i : container) {
             size_t local_width = i.size();
@@ -80,7 +72,7 @@ namespace SDL {
     }
 
     template <typename T, typename U>
-    SDL_Cursor* build_cursor(const Vector2s s, const Vector2s c, T next_line, U next_element) {
+    SDL_Cursor* build_cursor(const Vector2S s, const Vector2S c, T next_line, U next_element) {
         // U has the form std::pair<bool, Pixel>(),
         // where the first entry is true if the iterator has iterated throug all elements
         // T only returns if there is a next line or not
@@ -140,7 +132,7 @@ namespace SDL {
     }
 
     template <typename T>
-    SDL_Cursor* string_list_to_cursor(const T& l, const Vector2s c) {
+    SDL_Cursor* string_list_to_cursor(const T& l, const Vector2S c) {
         auto current_line = l.begin();
         auto current_element = current_line->begin();
 
@@ -180,7 +172,7 @@ namespace SDL {
 
     Cursor::Cursor(
         const std::initializer_list<std::initializer_list<Pixel>> l,
-        const Vector2s c
+        const Vector2S c
     ) {
         auto current_line = l.begin();
         auto current_element = current_line->begin();
@@ -203,7 +195,7 @@ namespace SDL {
 
     Cursor::Cursor(
         const std::initializer_list<std::string> l,
-        const Vector2s c
+        const Vector2S c
     ) {
         this->cursor = string_list_to_cursor(l, c);
         this->has_control = true;
@@ -212,7 +204,7 @@ namespace SDL {
     Cursor::Cursor(
         const std::string s,
         size_t w,
-        const Vector2s c
+        const Vector2S c
     ) {
         auto current_element = s.begin();
 
@@ -225,7 +217,7 @@ namespace SDL {
         // Are the same restrictions valid for the height of the cursor as for the width?
 
         this->cursor = build_cursor(
-            Vector2s {w, h},
+            Vector2S {w, h},
             c,
             [&](bool first) -> bool {
                 return current_element == s.end();
@@ -243,12 +235,12 @@ namespace SDL {
         this->has_control = true;
     }
 
-    Cursor::Cursor(const std::string s, const Vector2s c) {
+    Cursor::Cursor(const std::string s, const Vector2S c) {
         this->cursor = string_list_to_cursor(_implementation::cursor::split(s), c);
         this->has_control = true;
     }
 
-    Cursor::Cursor(Surface& s, Vector2s c) {
+    Cursor::Cursor(Surface& s, Vector2S c) {
         this->cursor = SDL_CreateColorCursor(s.sdl_surface, c[0], c[1]);
         this->has_control = true;
     }
