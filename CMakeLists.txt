@@ -10,6 +10,7 @@ add_library (ObjSDL
     clock.cc clock.hh
     short_types.cc short_types.hh  # header only
     clipboard.cc clipboard.hh
+    geometry.hh geometry.cc  # header only
 )
 
 include (cmake/FindSDL2.cmake)
