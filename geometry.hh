@@ -199,46 +199,25 @@ const T& w(const Vector<dim, T>& v) {
 
 
 template <typename T>
-struct Vector2 {
-    using value = Vector<2, T>;
-};
-
+using Vector2 = Vector<2, T>;
 
 template <typename T>
-struct Vector3 {
-    using value = Vector<3, T>;
-};
-
+using Vector3 = Vector<3, T>;
 
 template <typename T>
-struct Vector4 {
-    using value = Vector<3, T>;
-};
-
+using Vector4 = Vector<3, T>;
 
 template <size_t dim>
-struct VectorS {
-    using value = Vector<dim, size_t>;
-};
-
+using VectorS = Vector<dim, size_t>;
 
 template <size_t dim>
-struct VectorI {
-    using value = Vector<dim, int>;
-};
-
+using VectorI = Vector<dim, int>;
 
 template <size_t dim>
-struct VectorF {
-    using value = Vector<dim, float>;
-};
-
+using VectorF = Vector<dim, float>;
 
 template <size_t dim>
-struct VectorD {
-    using value = Vector<dim, double>;
-};
-
+using VectorD = Vector<dim, double>;
 
 using Vector2S = Vector<2, size_t>;
 using Vector3S = Vector<3, size_t>;
@@ -369,46 +348,25 @@ struct ScaledMeasurePolytope {
 
 
 template <typename T>
-struct Rectangle {
-    using value = ScaledMeasurePolytope<2, T>;
-};
-
+using Rectangle = ScaledMeasurePolytope<2, T>;
 
 template <typename T>
-struct Cuboid {
-    using value = ScaledMeasurePolytope<3, T>;
-};
-
+using Cuboid = ScaledMeasurePolytope<3, T>;
 
 template <typename T>
-struct ScaledTesseract {
-    using value = ScaledMeasurePolytope<4, T>;
-};
-
+using ScaledTesseract = ScaledMeasurePolytope<4, T>;
 
 template <size_t dim>
-struct ScaledMeasurePolytopeS {
-    using value = ScaledMeasurePolytope<dim, size_t>;
-};
-
+using ScaledMeasurePolytopeS = ScaledMeasurePolytope<dim, size_t>;
 
 template <size_t dim>
-struct ScaledMeasurePolytopeI {
-    using value = ScaledMeasurePolytope<dim, int>;
-};
-
+using ScaledMeasurePolytopeI = ScaledMeasurePolytope<dim, int>;
 
 template <size_t dim>
-struct ScaledMeasurePolytopeF {
-    using value = ScaledMeasurePolytope<dim, float>;
-};
-
+using ScaledMeasurePolytopeF = ScaledMeasurePolytope<dim, float>;
 
 template <size_t dim>
-struct ScaledMeasurePolytopeD {
-    using value = ScaledMeasurePolytope<dim, double>;
-};
-
+using ScaledMeasurePolytopeD = ScaledMeasurePolytope<dim, double>;
 
 using RectangleS = ScaledMeasurePolytope<2, size_t>;
 using RectangleI = ScaledMeasurePolytope<2, int>;
