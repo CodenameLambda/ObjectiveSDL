@@ -4,6 +4,28 @@
 
 
 template <size_t dim, typename T=double>
+class Vector;
+
+
+namespace _implementation {
+    namespace geometry {
+        template <size_t dim, typename T1, typename T2, typename F>
+        auto apply_parts(F f, const Vector<dim, T1>& v1, const Vector<dim, T2>& v2) {
+            Vector<dim, decltype(f(v1[0], v2[0]))> out;
+            auto iterator1 = v1.begin();
+            auto iterator2 = v2.begin();
+            for (auto& i : out) {
+                i = f(*iterator1, *iterator2);
+                ++ iterator1;
+                ++ iterator2;
+            }
+            return out;
+        }
+    }
+}
+
+
+template <size_t dim, typename T>
 class Vector {
     std::array<T, dim> data;
 
@@ -343,6 +365,21 @@ struct ScaledMeasurePolytope {
         for (const auto& i : scale)
             out *= i;
         return out;
+    }
+
+    ScaledMeasurePolytope<dim, T> intersection(const ScaledMeasurePolytope<dim, T>& other) const {
+        const Vector<dim, T>& pos = this->position;
+        const Vector<dim, T> pos2 = pos + this->scale;
+        const Vector<dim, T>& opos = other.position;
+        const Vector<dim, T> opos2 = opos + other.scale;
+        const Vector<dim, T> a0 = _implementation::geometry::apply_parts(std::min, pos, pos2);
+        const Vector<dim, T> a1 = _implementation::geometry::apply_parts(std::max, pos, pos2);
+        const Vector<dim, T> b0 = _implementation::geometry::apply_parts(std::min, opos, opos2);
+        const Vector<dim, T> b1 = _implementation::geometry::apply_parts(std::max, opos, opos2);
+        const Vector<dim, T> o0 = _implementation::geometry::apply_parts(std::max, a0, b0);
+        const Vector<dim, T> o1 = _implementation::geometry::apply_parts(std::min, a1, b1);
+        const Vector<dim, T> scale = o1 - o0;
+        return ScaledMeasurePolytope<dim, T>(o0, scale);
     }
 };
 
