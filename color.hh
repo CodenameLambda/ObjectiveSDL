@@ -6,41 +6,37 @@
 
 
 namespace SDL {
-    namespace _implementation {
-        namespace color {
-            enum BlendMode {
-                normal,
-                multiply,
-                screen,
-                overlay,
-                hard_light,
-                soft_light_photoshop,
-                soft_light_pegtop,
-                soft_light_illusions_hu,
-                soft_light_w3c,
-                color_dodge,
-                linear_dodge,
-                divide,
-                color_burn,
-                linear_burn,
-                vivid_light,
-                linear_light,
-                subtract,
-                add,
-                difference,
-                darken_only,
-                lighten_only,
-                hue,
-                saturation,
-                color,
-                perceived_luminocity_color,
-                luminocity,
-                perceived_luminocity,
-                alpha_compositing,
-                average
-            };
-        }
-    }
+    enum class BlendMode {
+        normal,
+        multiply,
+        screen,
+        overlay,
+        hard_light,
+        soft_light_photoshop,
+        soft_light_pegtop,
+        soft_light_illusions_hu,
+        soft_light_w3c,
+        color_dodge,
+        linear_dodge,
+        divide,
+        color_burn,
+        linear_burn,
+        vivid_light,
+        linear_light,
+        subtract,
+        add,
+        difference,
+        darken_only,
+        lighten_only,
+        hue,
+        saturation,
+        color,
+        perceived_luminocity_color,
+        luminocity,
+        perceived_luminocity,
+        alpha_compositing,
+        average
+    };
 
     struct Color {
         uchar r;

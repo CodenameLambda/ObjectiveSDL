@@ -6,17 +6,12 @@
 
 
 namespace SDL {
-    namespace _implementation {
-        enum VersionType {
-            alpha,
-            beta,
-            rc,
-            release
-        };
-    }
-
-    using VersionType = _implementation::VersionType;
-
+    enum class VersionType {
+        alpha,
+        beta,
+        rc,
+        release
+    };
 
     template <size_t version_elements=3>
     class Version : public std::array<size_t, version_elements> {
@@ -120,6 +115,5 @@ namespace SDL {
             return out + " " + to_string(v.type);
     }
 }
-
 
 #endif

@@ -140,11 +140,11 @@ namespace SDL {
             get_size(l),
             c,
             line_walker(current_line, current_element, l),
-            [&](bool first) -> std::pair<bool, _implementation::cursor::Pixel> {
+            [&](bool first) -> std::pair<bool, Pixel> {
                 if (!first)
                     ++ current_element;
                 if (current_element == current_line->end())
-                    return {true, _implementation::cursor::Pixel::_};
+                    return {true, Pixel::_};
                 else {
                     return {false, _implementation::cursor::char_to_pixel(*current_element)};
                 }
@@ -153,10 +153,10 @@ namespace SDL {
     }
 
     namespace cursor_pixels {
-        _implementation::cursor::Pixel _ = _implementation::cursor::Pixel::_;
-        _implementation::cursor::Pixel X = _implementation::cursor::Pixel::X;
-        _implementation::cursor::Pixel O = _implementation::cursor::Pixel::O;
-        _implementation::cursor::Pixel Z = _implementation::cursor::Pixel::Z;
+        Pixel _ = Pixel::_;
+        Pixel X = Pixel::X;
+        Pixel O = Pixel::O;
+        Pixel Z = Pixel::Z;
     }
 
     Cursor::Cursor() {

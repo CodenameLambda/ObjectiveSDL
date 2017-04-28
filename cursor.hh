@@ -12,23 +12,19 @@ struct Surface {
 };
 
 namespace SDL {
-    namespace _implementation {
-        namespace cursor {
-            enum Pixel {
-                _,  // transparent
-                X,  // black
-                O,  // white
-                Z   // inverted or black, if not available
-            };
-        }
-    }
+    enum class Pixel {
+        _,  // transparent
+        X,  // black
+        O,  // white
+        Z   // inverted or black, if not available
+    };
 
 
     namespace cursor_pixels {
-        extern _implementation::cursor::Pixel _;
-        extern _implementation::cursor::Pixel X;
-        extern _implementation::cursor::Pixel O;
-        extern _implementation::cursor::Pixel Z;
+        extern Pixel _;
+        extern Pixel X;
+        extern Pixel O;
+        extern Pixel Z;
     }
 
 
@@ -40,8 +36,6 @@ namespace SDL {
         Cursor();  // default cursor (arrow)
         Cursor(Cursor&) = delete;  // freeing would be a nightmare...
         Cursor(Cursor&&);
-
-        using Pixel = _implementation::cursor::Pixel;
 
         // the center is positioned relative to the top left
         Cursor(
