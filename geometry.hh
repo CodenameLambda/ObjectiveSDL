@@ -140,17 +140,15 @@ class Vector {
 };
 
 
-namespace std {
-    template <size_t id, typename T, size_t num>
-    T& get(Vector<num, T>& v) {
-        return std::get<id>(v._get_data());
-    }
+template <size_t id, typename T, size_t num>
+T& get(Vector<num, T>& v) {
+    return std::get<id>(v._get_data());
+}
 
 
-    template <size_t id, typename T, size_t num>
-    const T& get(const Vector<num, T>& v) {
-        return std::get<id>(v._get_data());
-    }
+template <size_t id, typename T, size_t num>
+const T& get(const Vector<num, T>& v) {
+    return std::get<id>(v._get_data());
 }
 
 
@@ -220,49 +218,49 @@ auto operator/(const Vector<dim, T>& v, const U& scalar) {
 
 template <typename T, size_t dim>
 T& x(Vector<dim, T>& v) {
-    return std::get<0>(v);
+    return get<0>(v);
 }
 
 
 template <typename T, size_t dim>
 const T& x(const Vector<dim, T>& v) {
-    return std::get<0>(v);
+    return get<0>(v);
 }
 
 
 template <typename T, size_t dim>
 T& y(Vector<dim, T>& v) {
-    return std::get<1>(v);
+    return get<1>(v);
 }
 
 
 template <typename T, size_t dim>
 const T& y(const Vector<dim, T>& v) {
-    return std::get<1>(v);
+    return get<1>(v);
 }
 
 
 template <typename T, size_t dim>
 T& z(Vector<dim, T>& v) {
-    return std::get<2>(v);
+    return get<2>(v);
 }
 
 
 template <typename T, size_t dim>
 const T& z(const Vector<dim, T>& v) {
-    return std::get<2>(v);
+    return get<2>(v);
 }
 
 
 template <typename T, size_t dim>
 T& w(Vector<dim, T>& v) {
-    return std::get<3>(v);
+    return get<3>(v);
 }
 
 
 template <typename T, size_t dim>
 const T& w(const Vector<dim, T>& v) {
-    return std::get<3>(v);
+    return get<3>(v);
 }
 
 
