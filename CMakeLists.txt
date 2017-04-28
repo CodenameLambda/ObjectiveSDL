@@ -12,6 +12,7 @@ add_library (ObjSDL
     clipboard.cc clipboard.hh
     geometry.hh geometry.cc  # header only
     version.cc version.hh
+    event.cc event.hh
 )
 
 include (cmake/FindSDL2.cmake)
