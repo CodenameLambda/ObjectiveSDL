@@ -21,6 +21,25 @@ namespace _implementation {
             }
             return out;
         }
+
+        template <size_t dim, typename T, typename F>
+        auto apply_parts(F f, const Vector<dim, T>& v) {
+            Vector<dim, decltype(f(v[0]))> out;
+            auto iterator = v.begin();
+            for (auto& i : out) {
+                i = f(*iterator);
+                ++ iterator;
+            }
+            return out;
+        }
+
+        template <typename T>
+        bool all(const T& iterable) {
+            for (bool i : iterable)
+                if (!i)
+                    return false;
+            return true;
+        }
     }
 }
 
@@ -134,41 +153,65 @@ namespace std {
 
 template <typename T, typename U, size_t dim>
 auto operator+(const Vector<dim, T>& a, const Vector<dim, U>& b) {
-    Vector<dim, decltype(a[0] + b[0])> out(false);
-    auto iterator = out.begin();
-    auto other = b.begin();
-    for (const auto& i : a) {
-        *iterator = i + *other;
-        ++ iterator;
-        ++ other;
-    }
-    return out;
+    return _implementation::geometry::apply_parts([](const T x, const U y) {
+            return x + y;
+    }, a, b);
 }
 
 
 template <typename T, typename U, size_t dim>
 auto operator-(const Vector<dim, T>& a, const Vector<dim, U>& b) {
-    Vector<dim, decltype(a[0] - b[0])> out(false);
-    auto iterator = out.begin();
-    auto other = b.begin();
-    for (const auto& i : a) {
-        *iterator = i - *other;
-        ++ iterator;
-        ++ other;
-    }
-    return out;
+    return _implementation::geometry::apply_parts([](const T x, const U y) {
+            return x - y;
+    }, a, b);
 }
 
 
 template <typename T, size_t dim>
-auto operator-(const Vector<dim, T>& a) {
-    Vector<dim, decltype(-a[0])> out(false);
-    auto iterator = out.begin();
-    for (const auto& i : a) {
-        *iterator = -i;
-        ++ iterator;
-    }
-    return out;
+auto operator-(const Vector<dim, T>& v) {
+    return _implementation::geometry::apply_parts([](const T x) {
+            return x;
+    }, v);
+}
+
+
+template <typename T, typename U, size_t dim>
+auto operator*(const Vector<dim, T>& a, const Vector<dim, U>& b) {
+    return _implementation::geometry::apply_parts([](const T x, const T y) {
+            return x * y;
+    }, a, b);
+}
+
+
+template <typename T, typename U, size_t dim>
+auto operator/(const Vector<dim, T>& a, const Vector<dim, U>& b) {
+    return _implementation::geometry::apply_parts([](const T x, const T y) {
+            return x / y;
+    }, a, b);
+}
+
+
+template <typename T, typename U, size_t dim>
+auto operator*(const U& scalar, const Vector<dim, T>& v) {
+    return _implementation::geometry::apply_parts([=](const T& x) {
+            return scalar * x;
+    }, v);
+}
+
+
+template <typename T, typename U, size_t dim>
+auto operator*(const Vector<dim, T>& v, const U& scalar) {
+    return _implementation::geometry::apply_parts([=](const T& x) {
+            return x * scalar;
+    }, v);
+}
+
+
+template <typename T, typename U, size_t dim>
+auto operator/(const Vector<dim, T>& v, const U& scalar) {
+    return _implementation::geometry::apply_parts([=](const T& x) {
+            return x / scalar;
+    }, v);
 }
 
 
@@ -257,129 +300,167 @@ using Vector4D = Vector<4, double>;
 
 template <size_t dim, typename T=double>
 struct ScaledMeasurePolytope {
-    Vector<dim, T> position;
-    Vector<dim, T> scale;
+    Vector<dim, T> position1;
+    Vector<dim, T> position2;
 
     ScaledMeasurePolytope() {
-        this->position = Vector<dim, T>();
-        this->scale = Vector<dim, T>();
+        this->position2 = Vector<dim, T>();
+        this->position2 = Vector<dim, T>();
     }
 
     ScaledMeasurePolytope(const Vector<dim, T>& scale) {
-        this->position = Vector<dim, T>();
-        this->scale = scale;
+        this->position1 = Vector<dim, T>();
+        this->position2 = scale;
     }
 
-    ScaledMeasurePolytope(const Vector<dim, T>& position, const Vector<dim, T>& scale) {
-        this->position = position;
-        this->scale = scale;
+    ScaledMeasurePolytope(const Vector<dim, T>& position1, const Vector<dim, T>& position2) {
+        this->position1 = position1;
+        this->position2 = position2;
     }
 
     static ScaledMeasurePolytope<dim, T> polytope_from_center(const Vector<dim, T>& scale) {
-        return ScaledMeasurePolytope<dim, T>(- scale/2, scale);
+        const Vector<dim, T> half_scale = scale / 2;
+        return ScaledMeasurePolytope<dim, T>(- half_scale, half_scale);
     }
 
     static ScaledMeasurePolytope<dim, T> polytope_from_center(
             const Vector<dim, T>& center,
             const Vector<dim, T>& scale
     ) {
-        return ScaledMeasurePolytope<dim, T>(center - scale/2, scale);
+        const Vector<dim, T> half_scale = scale / 2;
+        return ScaledMeasurePolytope<dim, T>(center - half_scale, center + half_scale);
     }
 
     void move(const Vector<dim, T>& delta) {
-        this->position += delta;
-    }
-
-    void move_scaled(Vector<dim, T> delta) {
-        auto iterator = delta.begin();
-        for (const auto& i : this->scale) {
-            *iterator *= i;
-            ++ iterator;
-        }
-        this->move(delta);
+        this->position1 += delta;
+        this->position2 += delta;
     }
 
     ScaledMeasurePolytope<dim, T> moved(const Vector<dim, T>& delta) const {
-        return ScaledMeasurePolytope<dim, T>(this->position + delta, scale);
+        return ScaledMeasurePolytope<dim, T>(this->position1 + delta, this->position2 + delta);
     }
 
-    ScaledMeasurePolytope<dim, T> moved_scaled(Vector<dim, T>& delta) const {
-        auto iterator = delta.begin();
-        for (const auto& i : this->scale) {
-            *iterator *= i;
-            ++ iterator;
-        }
-        return this->moved(delta);
+    void scale_from_point(const Vector<dim, T>& center, const Vector<dim, T>& scale) {
+        this->position1 = (this->position1 - center) * scale + center;
+        this->position2 = (this->position2 - center) * scale + center;
     }
 
-    void scale_in_place(const Vector<dim, T>& scale) {
-        auto iterator = this->scale.begin();
-        for (const auto& i : scale) {
-            *iterator *= i;
-            ++ iterator;
-        }
+    void scale(const Vector<dim, T>& scale) {
+        this->scale_from_point((this->position1 + this->position2) / 2, scale);
     }
 
-    void scale_from_center(const Vector<dim, T>& scale) {
-        auto position_iterator = this->position.begin();
-        auto scale_iterator = this->scale.begin();
-        for (const auto& i : scale) {
-            *position_iterator *= i;
-            *scale_iterator *= i;
-            ++ position_iterator;
-            ++ scale_iterator;
-        }
+    void scale_from_origin(const Vector<dim, T>& scale) {
+        this->position1 = this->position1 * scale;
+        this->position2 = this->position2 * scale;
     }
 
-    ScaledMeasurePolytope<dim, T> scaled_in_place(Vector<dim, T> scale) const {
-        auto iterator = scale.begin();
-        for (auto& i : scale) {
-            i *= *iterator;
-            ++ iterator;
-        }
-        return ScaledMeasurePolytope<dim, T>(this->position, scale);
+    ScaledMeasurePolytope<dim, T> scaled_from_point(
+            const Vector<dim, T>& center,
+            const Vector<dim, T>& scale
+    ) const {
+        ScaledMeasurePolytope<dim, T> copy = *this;
+        copy.scale_from_point(center, scale);
+        return copy;
     }
 
-    ScaledMeasurePolytope<dim, T> scaled_from_center(Vector<dim, T> scale) const {
-        Vector<dim, T> position = this->position;
-        auto iterator = scale.begin();
-        auto position_iterator = position.begin();
-        for (auto& i : scale) {
-            *position_iterator *= i;
-            i *= *iterator;
-            ++ position_iterator;
-            ++ iterator;
-        }
-        return ScaledMeasurePolytope<dim, T>(this->position, scale);
+    ScaledMeasurePolytope<dim, T> scaled(const Vector<dim, T>& scale) const {
+        ScaledMeasurePolytope<dim, T> copy = *this;
+        copy.scale(scale);
+        return copy;
+    }
+
+    ScaledMeasurePolytope<dim, T> scaled_from_origin(const Vector<dim, T>& scale) const {
+        ScaledMeasurePolytope<dim, T> copy = *this;
+        copy.scale_from_origin(scale);
+        return copy;
     }
 
     bool empty() const {
-        for (const auto& i : scale)
-            if (i != 0)
-                return false;
-        return true;
+        return this->position1 == this->position2;
     }
 
     T encased_size() const {
         T out = 1;
-        for (const auto& i : scale)
+        for (const auto& i : this->position2 - this->position1)
             out *= i;
         return out;
     }
 
-    ScaledMeasurePolytope<dim, T> intersection(const ScaledMeasurePolytope<dim, T>& other) const {
-        const Vector<dim, T>& pos = this->position;
-        const Vector<dim, T> pos2 = pos + this->scale;
-        const Vector<dim, T>& opos = other.position;
-        const Vector<dim, T> opos2 = opos + other.scale;
-        const Vector<dim, T> a0 = _implementation::geometry::apply_parts(std::min, pos, pos2);
-        const Vector<dim, T> a1 = _implementation::geometry::apply_parts(std::max, pos, pos2);
-        const Vector<dim, T> b0 = _implementation::geometry::apply_parts(std::min, opos, opos2);
-        const Vector<dim, T> b1 = _implementation::geometry::apply_parts(std::max, opos, opos2);
-        const Vector<dim, T> o0 = _implementation::geometry::apply_parts(std::max, a0, b0);
-        const Vector<dim, T> o1 = _implementation::geometry::apply_parts(std::min, a1, b1);
-        const Vector<dim, T> scale = o1 - o0;
-        return ScaledMeasurePolytope<dim, T>(o0, scale);
+    void make_trustable() {
+        const Vector<dim, T> pos1 = _implementation::geometry::apply_parts(
+            std::min,
+            this->position1,
+            this->position2
+        );  // we need the original data to construct position2
+        this->position2 = _implementation::geometry::apply_parts(
+            std::max,
+            this->position1,
+            this->position2
+        );
+        return this->position2;
+    }
+
+    ScaledMeasurePolytope<dim, T> trustable() const {
+        ScaledMeasurePolytope<dim, T> copy = *this;
+        copy.make_trustable();
+        return copy;
+    }
+
+    ScaledMeasurePolytope<dim, T> intersection(
+            ScaledMeasurePolytope<dim, T>& other,
+            bool trusted=false,
+            bool trust_other=false
+    ) {
+        if (!trusted)
+            this->make_trustable();
+        if (!trust_other)
+            other.make_trustable();
+        return this->trusted_intersection(other);
+    }
+
+    ScaledMeasurePolytope<dim, T> trusted_intersection(
+            const ScaledMeasurePolytope<dim, T>& other
+    ) const {
+        const Vector<dim, T> o0 = _implementation::geometry::apply_parts(
+            std::max,
+            this->position1,
+            other.position1
+        );
+        const Vector<dim, T> o1 = _implementation::geometry::apply_parts(
+            std::min,
+            this->position2,
+            other.position2
+        );
+        return ScaledMeasurePolytope<dim, T>(o0, o1);
+    }
+
+    bool contains(const Vector<dim, T>& point, bool strict=false, bool trusted=false) {
+        if (!trusted)
+            this->make_trustable();
+        return this->trusted_contains(point, strict);
+    }
+
+    bool trusted_contains(const Vector<dim, T>& point, bool strict=false) const {
+        auto f = [=](const T a, const T b) {
+            if (strict)
+                return a < b;
+            else
+                return a <= b;
+        };
+
+        return (
+            _implementation::geometry::all(
+                _implementation::geometry::apply_parts(f, this->position1, point)
+            ) &&
+            _implementation::geometry::all(
+                _implementation::geometry::apply_parts(f, point, this->position2)
+            )
+        );
+    }
+
+    template <typename U>
+    operator ScaledMeasurePolytope<dim, U>() {
+        return ScaledMeasurePolytope<dim, U>(this->position1, this->position2);
     }
 };
 
