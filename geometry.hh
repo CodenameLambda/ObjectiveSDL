@@ -1,3 +1,6 @@
+#ifndef OBJSDL_GEOMETRY_HH
+#define OBJSDL_GEOMETRY_HH
+
 #include <array>
 #include <string>
 #include <cmath>
@@ -498,3 +501,5 @@ using ScaledTesseractS = ScaledMeasurePolytope<2, size_t>;
 using ScaledTesseractI = ScaledMeasurePolytope<2, int>;
 using ScaledTesseractF = ScaledMeasurePolytope<2, float>;
 using ScaledTesseractD = ScaledMeasurePolytope<2, double>;
+
+#endif

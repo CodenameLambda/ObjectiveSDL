@@ -1,5 +1,6 @@
 #ifndef SDL_SHORT_TYPES_HH
 #define SDL_SHORT_TYPES_HH
+
 namespace SDL {
     using cbool = const bool;
     using cchar = const char;
@@ -23,4 +24,5 @@ namespace SDL {
     using ldouble = long double;
     using cldouble = const long double;
 }
+
 #endif
