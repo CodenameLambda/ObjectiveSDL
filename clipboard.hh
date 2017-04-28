@@ -1,5 +1,5 @@
-#ifndef SDL_CLIPBOARD_HH
-#define SDL_CLIPBOARD_HH
+#ifndef OBJSDL_CLIPBOARD_HH
+#define OBJSDL_CLIPBOARD_HH
 
 #include <string>
 

@@ -1,5 +1,5 @@
-#ifndef SDL_SHORT_TYPES_HH
-#define SDL_SHORT_TYPES_HH
+#ifndef OBJSDL_SHORT_TYPES_HH
+#define OBJSDL_SHORT_TYPES_HH
 
 namespace SDL {
     using cbool = const bool;

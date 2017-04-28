@@ -1,5 +1,5 @@
-#ifndef SDL_CLOCK_HH
-#define SDL_CLOCK_HH
+#ifndef OBJSDL_CLOCK_HH
+#define OBJSDL_CLOCK_HH
 
 #include <chrono>
 
