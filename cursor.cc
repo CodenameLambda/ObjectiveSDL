@@ -87,7 +87,7 @@ namespace SDL {
         while (!done) {
             size_t col = 0;
             bool line_done;
-            Cursor::Pixel i;
+            Pixel i;
             std::tie(line_done, i) = next_element(true);
 
             while (!line_done) {
@@ -101,14 +101,14 @@ namespace SDL {
                 ++ col;
 
                 switch (i) {
-                    case Cursor::Pixel::_:
+                    case Pixel::_:
                         break;
-                    case Cursor::Pixel::X:
+                    case Pixel::X:
                         data[index] += 1;  // sets the last bit to one.
-                    case Cursor::Pixel::O:
+                    case Pixel::O:
                         mask[index] += 1;
                         break;
-                    case Cursor::Pixel::Z:
+                    case Pixel::Z:
                         data[index] += 1;
                         break;
                 }

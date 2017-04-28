@@ -406,19 +406,19 @@ namespace SDL {
     }
 
     Color operator+(const Color bottom, const Color top) {
-        return Color::blend(bottom, top, Color::BlendMode::add);
+        return Color::blend(bottom, top, BlendMode::add);
     }
 
     Color operator-(const Color bottom, const Color top) {
-        return Color::blend(bottom, top, Color::BlendMode::subtract);
+        return Color::blend(bottom, top, BlendMode::subtract);
     }
 
     Color operator*(const Color bottom, const Color top) {
-        return Color::blend(bottom, top, Color::BlendMode::multiply);
+        return Color::blend(bottom, top, BlendMode::multiply);
     }
 
     Color operator/(const Color bottom, const Color top) {
-        return Color::blend(bottom, top, Color::BlendMode::divide);
+        return Color::blend(bottom, top, BlendMode::divide);
     }
 
     Color operator*(cfloat scalar, const Color c) {

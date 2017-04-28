@@ -72,8 +72,6 @@ namespace SDL {
         Color with_alpha(cuchar alpha) const;
         Color opaque() const;
 
-        using BlendMode = _implementation::color::BlendMode;
-
         static Color blend(
                 const Color bottom,
                 const Color top,
