@@ -157,6 +157,15 @@ namespace SDL {
     };
 
 
+    namespace events {
+        class QuitEvent : public BuiltinEvent {
+            using BuiltinEvent::BuiltinEvent;
+
+            QuitEvent();
+        };
+    }
+
+
     extern const std::unordered_map<size_t, std::function<Event*(SDL_Event)>> event_types;
     extern std::unordered_map<size_t, std::function<Event*(SDL_Event)>> user_types;
 
