@@ -41,6 +41,7 @@ namespace SDL {
 
             WindowMovedEvent();
             WindowMovedEvent(const SDL_Event& ev);
+            WindowMovedEvent(SDL_Event&& ev);
             WindowMovedEvent(const ssize_t x, const ssize_t y);
         };
 
@@ -54,6 +55,7 @@ namespace SDL {
 
             WindowResizedEvent();
             WindowResizedEvent(const SDL_Event& ev);
+            WindowResizedEvent(SDL_Event&& ev);
             WindowResizedEvent(const size_t w, const size_t h);
         };
 
@@ -67,6 +69,7 @@ namespace SDL {
 
             WindowSizeChangedEvent();
             WindowSizeChangedEvent(const SDL_Event& ev);
+            WindowSizeChangedEvent(SDL_Event&& ev);
             WindowSizeChangedEvent(const size_t w, const size_t h);
         };
 

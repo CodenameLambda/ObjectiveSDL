@@ -26,6 +26,10 @@ namespace SDL {
         : WindowEvent(ev), x(underlying_event.window.data1), y(underlying_event.window.data2) {
         }
 
+        WindowMovedEvent::WindowMovedEvent(SDL_Event&& ev)
+        : WindowEvent(ev), x(underlying_event.window.data1), y(underlying_event.window.data2) {
+        }
+
         WindowMovedEvent::WindowMovedEvent(const ssize_t x, const ssize_t y) : WindowMovedEvent() {
             this->x = x;
             this->y = y;
@@ -36,6 +40,10 @@ namespace SDL {
         }
 
         WindowResizedEvent::WindowResizedEvent(const SDL_Event& ev)
+        : WindowEvent(ev), w(underlying_event.window.data1), h(underlying_event.window.data2) {
+        }
+
+        WindowResizedEvent::WindowResizedEvent(SDL_Event&& ev)
         : WindowEvent(ev), w(underlying_event.window.data1), h(underlying_event.window.data2) {
         }
 
@@ -50,6 +58,10 @@ namespace SDL {
         }
 
         WindowSizeChangedEvent::WindowSizeChangedEvent(const SDL_Event& ev)
+        : WindowEvent(ev), w(underlying_event.window.data1), h(underlying_event.window.data2) {
+        }
+
+        WindowSizeChangedEvent::WindowSizeChangedEvent(SDL_Event&& ev)
         : WindowEvent(ev), w(underlying_event.window.data1), h(underlying_event.window.data2) {
         }
 
