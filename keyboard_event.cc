@@ -58,5 +58,45 @@ namespace SDL {
 
         KeyReleasedEvent::KeyReleasedEvent(const SDL_Keysym key) : KeyboardEvent(false, key) {
         }
+
+        TextEditingEvent::TextEditingEvent()
+        : BuiltinEvent(), start(this->underlying_event.edit.start),
+          length(this->underlying_event.edit.length) {
+              this->underlying_event.edit.type = SDL_TEXTEDITING;
+              this->underlying_event.edit.timestamp = 0;
+              this->underlying_event.edit.windowID = 0;
+              this->underlying_event.edit.text[0] = '\0';
+              this->underlying_event.edit.start = 0;
+              this->underlying_event.edit.length = 0;
+        }
+
+        TextEditingEvent::TextEditingEvent(const SDL_Event& ev)
+        : BuiltinEvent(ev), start(this->underlying_event.edit.start),
+          length(this->underlying_event.edit.length) {
+        }
+
+        TextEditingEvent::TextEditingEvent(SDL_Event&& ev)
+        : BuiltinEvent(ev), start(this->underlying_event.edit.start),
+          length(this->underlying_event.edit.length) {
+        }
+
+        TextEditingEvent::TextEditingEvent(std::string text, ssize_t start, ssize_t length)
+        : TextEditingEvent() {
+            this->text(text);
+            this->start = start;
+            this->length = length;
+        }
+
+        std::string TextEditingEvent::text() {
+            return std::string(this->underlying_event.edit.text);
+        }
+
+        void TextEditingEvent::text(std::string s) {
+            unsigned char i;
+            for (i = 0; i < s.size() && i < 255; ++i) {
+                this->underlying_event.edit.text[i] = s[i];
+            }
+            this->underlying_event.edit.text[i] = '\0';
+        }
     }
 }

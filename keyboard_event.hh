@@ -43,6 +43,20 @@ namespace SDL {
             KeyReleasedEvent(const bool pressed, const SDL_Keysym key) = delete;
             KeyReleasedEvent(const SDL_Keysym key);
         };
+
+        class TextEditingEvent : public BuiltinEvent {
+            public:
+            Sint32& start;
+            Sint32& length;
+
+            TextEditingEvent();
+            TextEditingEvent(const SDL_Event&);
+            TextEditingEvent(SDL_Event&&);
+            TextEditingEvent(std::string text, ssize_t start, ssize_t length);
+
+            std::string text();
+            void text(std::string);
+        };
     }
 }
 
