@@ -14,7 +14,7 @@ namespace SDL {
             KeyboardEvent(SDL_Event&& ev);
             KeyboardEvent(const unsigned char repeat, const bool pressed, const SDL_Keysym key);
             KeyboardEvent(const bool pressed, const SDL_Keysym key);
-            bool pressed();
+            bool pressed() const;
             void pressed(bool);
         };
 
@@ -53,6 +53,19 @@ namespace SDL {
             TextEditingEvent(const SDL_Event&);
             TextEditingEvent(SDL_Event&&);
             TextEditingEvent(std::string text, ssize_t start, ssize_t length);
+
+            std::string text() const;
+            void text(std::string);
+
+            unsigned char new_length() const;
+            ssize_t length_delta() const;
+        };
+
+        class TextInputEvent : public BuiltinEvent {
+            public:
+            using BuiltinEvent::BuiltinEvent;
+            TextInputEvent();
+            TextInputEvent(std::string text);
 
             std::string text();
             void text(std::string);

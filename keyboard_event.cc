@@ -37,7 +37,7 @@ namespace SDL {
         : KeyboardEvent(0, pressed, key) {
         }
 
-        bool KeyboardEvent::pressed() {
+        bool KeyboardEvent::pressed() const {
             return this->underlying_event.key.state == SDL_PRESSED;
         }
 
@@ -87,14 +87,50 @@ namespace SDL {
             this->length = length;
         }
 
-        std::string TextEditingEvent::text() {
+        std::string TextEditingEvent::text() const {
             return std::string(this->underlying_event.edit.text);
         }
 
         void TextEditingEvent::text(std::string s) {
             unsigned char i;
-            for (i = 0; i < s.size() && i < 255; ++i) {
+            for (i = 0; i < s.size() && i < 31; ++i) {
                 this->underlying_event.edit.text[i] = s[i];
+            }
+            this->underlying_event.edit.text[i] = '\0';
+        }
+
+        unsigned char TextEditingEvent::new_length() const {
+            unsigned char l;
+            for (l = 0; l < 31; ++l) {
+                if (this->underlying_event.edit.text[l] == '\0')
+                    return l;
+            }
+            return 31;
+        }
+
+        ssize_t TextEditingEvent::length_delta() const {
+            return ssize_t(this->new_length()) - ssize_t(this->length);
+        }
+
+        TextInputEvent::TextInputEvent() : BuiltinEvent() {
+            this->underlying_event.text.type = SDL_TEXTINPUT;
+            this->underlying_event.text.timestamp = 0;
+            this->underlying_event.text.windowID = 0;
+            this->underlying_event.text.text[0] = '\0';
+        }
+
+        TextInputEvent::TextInputEvent(std::string text) : BuiltinEvent() {
+            this->text(text);
+        }
+
+        std::string TextInputEvent::text() {
+            return std::string(this->underlying_event.text.text);
+        }
+
+        void TextInputEvent::text(std::string s) {
+            unsigned char i;
+            for (i = 0; i < s.size() && i < 31; ++i) {
+                this->underlying_event.text.text[i] = s[i];
             }
             this->underlying_event.edit.text[i] = '\0';
         }
