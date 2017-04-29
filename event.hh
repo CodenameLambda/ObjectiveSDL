@@ -8,6 +8,8 @@
 #include <typeinfo>
 #include <SDL.h>
 #include <chrono>
+#include <unordered_map>
+#include <functional>
 
 struct Window {  // TODO: Remove in favour of the real class
 };
@@ -38,6 +40,7 @@ namespace SDL {
         SDL_Event underlying_event;
 
         public:
+        Event();
         Event(const SDL_Event& ev);
         Event(SDL_Event&& ev);
 
@@ -148,8 +151,24 @@ namespace SDL {
 
     
     class BuiltinEvent : public Event {
+        using Event::Event;
+
         bool is_user_defined() const;
     };
+
+
+    extern const std::unordered_map<size_t, std::function<Event*(SDL_Event)>> event_types;
+    extern std::unordered_map<size_t, std::function<Event*(SDL_Event)>> user_types;
+
+
+    template <typename T>
+    size_t register_user_event(
+            std::function<Event*(SDL_Event)> f = [](SDL_Event ev){ return new T(ev); }
+    ) {
+        for (size_t id = 0; true; ++id)
+            if (user_types.find(id) == user_types.end())
+                user_types[id] = f;
+    }
 }
 
 // includes to special event types; they follow here to guarantee that the BuiltinEvent type is existent.

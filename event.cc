@@ -5,6 +5,9 @@ namespace SDL {
         return "The event doesn't contain the given type.";
     }
 
+    Event::Event() {
+    }
+
     Event::Event(const SDL_Event& ev) {
         this->underlying_event = ev;
     }
