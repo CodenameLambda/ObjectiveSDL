@@ -8,33 +8,33 @@ namespace SDL {
         Event* construct_window_event(SDL_Event ev);
 
         class WindowEvent : public BuiltinEvent {
+            protected:
+            virtual unsigned char get_window_event_id() const = 0;
+
             public:
             using BuiltinEvent::BuiltinEvent;
-
-            size_t window_event_id;
 
             WindowEvent();
         };
 
         class WindowShownEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_SHOWN;
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowHiddenEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_HIDDEN;
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowExposedEvent : public WindowEvent {  // should be redrawn
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_EXPOSED;
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowMovedEvent : public WindowEvent {
             public:
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_MOVED;
 
             Sint32& x;
             Sint32& y;
@@ -43,12 +43,13 @@ namespace SDL {
             WindowMovedEvent(const SDL_Event& ev);
             WindowMovedEvent(SDL_Event&& ev);
             WindowMovedEvent(const ssize_t x, const ssize_t y);
+
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowResizedEvent : public WindowEvent {  // not for API call
             public:
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_RESIZED;
 
             Sint32& w;
             Sint32& h;
@@ -57,12 +58,13 @@ namespace SDL {
             WindowResizedEvent(const SDL_Event& ev);
             WindowResizedEvent(SDL_Event&& ev);
             WindowResizedEvent(const size_t w, const size_t h);
+
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowSizeChangedEvent : public WindowEvent {
             public:
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_SIZE_CHANGED;
 
             Sint32& w;
             Sint32& h;
@@ -71,61 +73,64 @@ namespace SDL {
             WindowSizeChangedEvent(const SDL_Event& ev);
             WindowSizeChangedEvent(SDL_Event&& ev);
             WindowSizeChangedEvent(const size_t w, const size_t h);
+
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowMinimizedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_MINIMIZED;
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowMaximizedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_MAXIMIZED;
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowRestoredEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_RESTORED;
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowGainedMouseFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_ENTER;
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowLostMouseFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_LEAVE;
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowGainedKeyboardFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_FOCUS_GAINED;
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowLostKeyboardFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_FOCUS_LOST;
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowClosedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_CLOSE;
+            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowFocusOfferedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_TAKE_FOCUS;
+
+            virtual unsigned char get_window_event_id() const;
 
             void take() const;
         };
 
         class WindowHitTestEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            size_t window_event_id = SDL_WINDOWEVENT_HIT_TEST;
+            virtual unsigned char get_window_event_id() const;
         };
 
-        extern const std::unordered_map<size_t, std::function<Event*(SDL_Event)>> window_event_types;
+        extern const std::unordered_map<unsigned char, std::function<Event*(SDL_Event)>> window_event_types;
     }
 }
 #endif
