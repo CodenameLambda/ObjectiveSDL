@@ -144,7 +144,7 @@ namespace SDL {
                 this->additional_data = *((T*) ev.user.data2);
         }
         
-        bool is_user_defined() const {
+        virtual bool is_user_defined() const {
             return true;
         }
     };
@@ -153,7 +153,7 @@ namespace SDL {
     class BuiltinEvent : public Event {
         using Event::Event;
 
-        bool is_user_defined() const;
+        virtual bool is_user_defined() const;
     };
 
 
