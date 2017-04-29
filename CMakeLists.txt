@@ -15,6 +15,7 @@ add_library (ObjSDL
     event.cc event.hh
     window_event.cc window_event.hh
     keyboard_event.cc keyboard_event.hh
+    various_events.cc various_events.hh
 )
 
 include (cmake/FindSDL2.cmake)
