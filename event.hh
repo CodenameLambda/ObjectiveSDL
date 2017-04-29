@@ -193,5 +193,6 @@ namespace SDL {
 
 // includes to special event types; they follow here to guarantee that the BuiltinEvent type is existent.
 #include "window_event.hh"
+#include "keyboard_event.hh"
 
 #endif
