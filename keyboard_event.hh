@@ -19,7 +19,7 @@ namespace SDL {
             KeyboardEvent(const unsigned char repeat, const bool pressed, const SDL_Keysym key);
             KeyboardEvent(const bool pressed, const SDL_Keysym key);
             bool pressed() const;
-            void pressed(bool);
+            void pressed(const bool);
         };
 
         class KeyPressedEvent : public KeyboardEvent {
@@ -76,7 +76,7 @@ namespace SDL {
             TextInputEvent(std::string text);
 
             std::string text();
-            void text(std::string);
+            void text(const std::string&);
         };
     }
 }

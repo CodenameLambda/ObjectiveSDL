@@ -41,7 +41,7 @@ namespace SDL {
             return this->underlying_event.key.state == SDL_PRESSED;
         }
 
-        void KeyboardEvent::pressed(bool value) {
+        void KeyboardEvent::pressed(const bool value) {
             this->underlying_event.key.state = value? SDL_PRESSED : SDL_RELEASED;
         }
 
@@ -127,7 +127,7 @@ namespace SDL {
             return std::string(this->underlying_event.text.text);
         }
 
-        void TextInputEvent::text(std::string s) {
+        void TextInputEvent::text(const std::string& s) {
             unsigned char i;
             for (i = 0; i < s.size() && i < 31; ++i) {
                 this->underlying_event.text.text[i] = s[i];
