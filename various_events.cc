@@ -29,14 +29,14 @@ namespace SDL {
             this->underlying_event.syswm.msg = nullptr;
         }
 
-        /* WindowManagerEvent::WindowManagerEvent(const WindowManagerEvent& other)
+        WindowManagerEvent::WindowManagerEvent(const WindowManagerEvent& other)
         : BuiltinEvent(other.get_sdl_event()) {
             this->underlying_event.syswm.msg = new SDL_SysWMmsg(*this->underlying_event.syswm.msg);
         }
 
         WindowManagerEvent::WindowManagerEvent(WindowManagerEvent&& other)
         : BuiltinEvent(std::move(other.get_sdl_event())) {
-            other.underlying_event = nullptr;
+            other.underlying_event.syswm.msg = nullptr;
         }
 
         WindowManagerEvent::WindowManagerEvent(SDL_SysWMmsg& msg) : WindowManagerEvent() {
@@ -45,17 +45,17 @@ namespace SDL {
 
         WindowManagerEvent::WindowManagerEvent(SDL_SysWMmsg&& msg) : WindowManagerEvent() {
             this->underlying_event.syswm.msg = new SDL_SysWMmsg(msg);
-        } */
+        }
 
         WindowManagerEvent::WindowManagerEvent(SDL_SysWMmsg* msg) : WindowManagerEvent() {
             this->underlying_event.syswm.msg = msg;
         }
 
-        /* WindowManagerEvent* WindowManagerEvent::from_copy(SDL_SysWMmsg msg) {
+        WindowManagerEvent* WindowManagerEvent::from_copy(SDL_SysWMmsg msg) {
             return new WindowManagerEvent(std::move(msg));
-        } */
+        }
 
-        /* SDL_SysWMmsg& WindowManagerEvent::message() {
+        SDL_SysWMmsg& WindowManagerEvent::message() {
             if (this->underlying_event.syswm.msg == nullptr)
                 this->underlying_event.syswm.msg = new SDL_SysWMmsg();
             return *(this->underlying_event.syswm.msg);
@@ -63,15 +63,15 @@ namespace SDL {
 
         const SDL_SysWMmsg& WindowManagerEvent::message() const {
             return *(this->underlying_event.syswm.msg);
-        } */
+        }
 
         bool WindowManagerEvent::has_message() const {
             return this->underlying_event.syswm.msg != nullptr;
         }
 
-        /* WindowManagerEvent::~WindowManagerEvent() {
+        WindowManagerEvent::~WindowManagerEvent() {
             delete this->underlying_event.syswm.msg;
-        } */
+        }
 
         DropEvent::DropEvent() : BuiltinEvent() {
             this->underlying_event.drop.type = SDL_DROPFILE;

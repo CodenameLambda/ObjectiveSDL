@@ -1,6 +1,7 @@
 #ifndef OBJSDL_VARIOUS_EVENTS_HH
 #define OBJSDL_VARIOUS_EVENTS_HH
 #include "event.hh"
+#include <SDL_syswm.h>
 
 
 namespace SDL {
@@ -41,21 +42,20 @@ namespace SDL {
 
             public:
             WindowManagerEvent();
-            // WindowManagerEvent(const WindowManagerEvent& other);
-            WindowManagerEvent(const WindowManagerEvent& other) = delete;
+            WindowManagerEvent(const WindowManagerEvent& other);
             WindowManagerEvent(WindowManagerEvent&& other);
-            // WindowManagerEvent(SDL_SysWMmsg& msg);
-            // WindowManagerEvent(SDL_SysWMmsg&& msg);
+            WindowManagerEvent(SDL_SysWMmsg& msg);
+            WindowManagerEvent(SDL_SysWMmsg&& msg);
             WindowManagerEvent(SDL_SysWMmsg* msg);
 
-            // static WindowManagerEvent* from_copy(SDL_SysWMmsg msg);
+            static WindowManagerEvent* from_copy(SDL_SysWMmsg msg);
 
-            // SDL_SysWMmsg& message();
-            // const SDL_SysWMmsg& message() const;
+            SDL_SysWMmsg& message();
+            const SDL_SysWMmsg& message() const;
 
             bool has_message() const;
 
-            // virtual ~WindowManagerEvent();
+            virtual ~WindowManagerEvent();
         };
 
         class DropEvent : public BuiltinEvent {
