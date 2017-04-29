@@ -70,8 +70,8 @@ namespace SDL {
             return dynamic_cast<T*>(*this) != nullptr;
         }
 
-        SDL_Event& get();
-        const SDL_Event& get() const;
+        SDL_Event& get_sdl_event();
+        const SDL_Event& get_sdl_event() const;
 
         std::chrono::system_clock::time_point timestamp() const;
         Window& window() const;
@@ -144,7 +144,7 @@ namespace SDL {
                 this->additional_data = *((T*) ev.user.data2);
         }
         
-        bool is_user_defined() const {
+        virtual bool is_user_defined() const {
             return true;
         }
     };
@@ -153,7 +153,7 @@ namespace SDL {
     class BuiltinEvent : public Event {
         using Event::Event;
 
-        bool is_user_defined() const;
+        virtual bool is_user_defined() const;
     };
 
 

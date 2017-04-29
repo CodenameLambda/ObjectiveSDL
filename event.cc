@@ -16,11 +16,11 @@ namespace SDL {
         this->underlying_event = ev;
     }
 
-    SDL_Event& Event::get() {
+    SDL_Event& Event::get_sdl_event() {
         return this->underlying_event;
     }
 
-    const SDL_Event& Event::get() const {
+    const SDL_Event& Event::get_sdl_event() const {
         return this->underlying_event;
     }
 
@@ -48,7 +48,7 @@ namespace SDL {
         SDL_PushEvent(&(this->underlying_event));
     }
 
-    bool BuiltinEvent::Event::is_user_defined() const {
+    bool BuiltinEvent::is_user_defined() const {
         return false;
     }
 
