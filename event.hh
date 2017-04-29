@@ -80,6 +80,8 @@ namespace SDL {
         virtual bool is_user_defined() const = 0;
 
         void push();
+
+        virtual ~Event();
     };
 
     
@@ -102,43 +104,54 @@ namespace SDL {
     }
 
 
-    template <typename T, typename U=VoidType>
+    template <typename T=VoidType, typename U=VoidType>
     class UserEvent : public Event {
         protected:
         T& data;
         U& additional_data;
 
         public:
-        UserEvent(const T& data) {
+        UserEvent()
+        : Event(), data(this->underlying_event.user.data1),
+          additional_data(this->underlying_event.user.data2) {
+        }
+
+        UserEvent(const UserEvent<T, U>& other) : UserEvent() {
+            this->data = other.data;
+        }
+
+        UserEvent(const T& data) : UserEvent() {
             this->data = data;
         }
 
-        UserEvent(T&& data) {
+        UserEvent(T&& data) : UserEvent() {
             this->data = data;
         }
 
-        UserEvent(const T& data, const U& additional_data) {
-            this->data = data;
-            this->additional_data = additional_data;
-        }
-
-        UserEvent(T&& data, const U& additional_data) {
-            this->data = data;
-            this->additional_data = additional_data;
-        }
-
-        UserEvent(const T& data, U&& additional_data) {
-            this->data = data;
-            this->additional_data = additional_data;
-        }
-
-        UserEvent(T&& data, U&& additional_data) {
+        UserEvent(const T& data, const U& additional_data) : UserEvent() {
             this->data = data;
             this->additional_data = additional_data;
         }
 
-        UserEvent(const SDL_Event& ev) {
-            if (ev.user.data1 != nullptr)
+        UserEvent(T&& data, const U& additional_data) : UserEvent() {
+            this->data = data;
+            this->additional_data = additional_data;
+        }
+
+        UserEvent(const T& data, U&& additional_data) : UserEvent() {
+            this->data = data;
+            this->additional_data = additional_data;
+        }
+
+        UserEvent(T&& data, U&& additional_data) : UserEvent() {
+            this->data = data;
+            this->additional_data = additional_data;
+        }
+
+        UserEvent(const SDL_Event& ev)
+        : Event(ev), data(this->underlying_event.user.data1),
+          additional_data(this->underlying_event.user.data2) {
+            if (typeid(U) != typeid(VoidType) && ev.user.data1 != nullptr)
                 this->data = *((T*) ev.user.data1);
             if (typeid(U) != typeid(VoidType) && ev.user.data2 != nullptr)
                 this->additional_data = *((T*) ev.user.data2);
@@ -146,6 +159,13 @@ namespace SDL {
         
         virtual bool is_user_defined() const {
             return true;
+        }
+
+        virtual ~UserEvent() {
+            if (typeid(T) != typeid(VoidType))
+                delete &this->data;
+            if (typeid(U) != typeid(VoidType))
+                delete &this->additional_data;
         }
     };
 
@@ -155,15 +175,6 @@ namespace SDL {
 
         virtual bool is_user_defined() const;
     };
-
-
-    namespace events {
-        class QuitEvent : public BuiltinEvent {
-            using BuiltinEvent::BuiltinEvent;
-
-            QuitEvent();
-        };
-    }
 
 
     extern const std::unordered_map<size_t, std::function<Event*(SDL_Event)>> event_types;

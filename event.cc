@@ -48,13 +48,10 @@ namespace SDL {
         SDL_PushEvent(&(this->underlying_event));
     }
 
-    bool BuiltinEvent::is_user_defined() const {
-        return false;
+    Event::~Event() {
     }
 
-    namespace events {
-        QuitEvent::QuitEvent() : BuiltinEvent() {
-            this->underlying_event.quit.type = SDL_QUIT;
-        }
+    bool BuiltinEvent::is_user_defined() const {
+        return false;
     }
 }
