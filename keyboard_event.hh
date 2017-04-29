@@ -4,7 +4,11 @@
 
 namespace SDL {
     namespace events {
-        class KeyboardEvent : public BuiltinEvent {
+        class KeyboardRelatedEvent : public BuiltinEvent {
+            using BuiltinEvent::BuiltinEvent;
+        };
+
+        class KeyboardEvent : public KeyboardRelatedEvent {
             public:
             Uint8& repeat;
             SDL_Keysym& key_symbol;
@@ -44,7 +48,11 @@ namespace SDL {
             KeyReleasedEvent(const SDL_Keysym key);
         };
 
-        class TextEditingEvent : public BuiltinEvent {
+        class TextInputRelatedEvent : public KeyboardRelatedEvent {
+            using KeyboardRelatedEvent::KeyboardRelatedEvent;
+        };
+
+        class TextEditingEvent : public TextInputRelatedEvent {
             public:
             Sint32& start;
             Sint32& length;
@@ -61,9 +69,9 @@ namespace SDL {
             ssize_t length_delta() const;
         };
 
-        class TextInputEvent : public BuiltinEvent {
+        class TextInputEvent : public TextInputRelatedEvent {
             public:
-            using BuiltinEvent::BuiltinEvent;
+            using TextInputRelatedEvent::TextInputRelatedEvent;
             TextInputEvent();
             TextInputEvent(std::string text);
 

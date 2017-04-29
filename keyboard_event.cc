@@ -4,7 +4,7 @@
 namespace SDL {
     namespace events {
         KeyboardEvent::KeyboardEvent()
-        : BuiltinEvent(), repeat(this->underlying_event.key.repeat),
+        : KeyboardRelatedEvent(), repeat(this->underlying_event.key.repeat),
           key_symbol(this->underlying_event.key.keysym) {
               this->underlying_event.key.type = SDL_KEYDOWN;
               this->underlying_event.key.timestamp = 0;
@@ -14,12 +14,12 @@ namespace SDL {
         }
 
         KeyboardEvent::KeyboardEvent(const SDL_Event& ev)
-        : BuiltinEvent(ev), repeat(this->underlying_event.key.repeat),
+        : KeyboardRelatedEvent(ev), repeat(this->underlying_event.key.repeat),
           key_symbol(this->underlying_event.key.keysym) {
         }
 
         KeyboardEvent::KeyboardEvent(SDL_Event&& ev)
-        : BuiltinEvent(ev), repeat(this->underlying_event.key.repeat),
+        : KeyboardRelatedEvent(ev), repeat(this->underlying_event.key.repeat),
           key_symbol(this->underlying_event.key.keysym) {
         }
 
@@ -60,7 +60,7 @@ namespace SDL {
         }
 
         TextEditingEvent::TextEditingEvent()
-        : BuiltinEvent(), start(this->underlying_event.edit.start),
+        : TextInputRelatedEvent(), start(this->underlying_event.edit.start),
           length(this->underlying_event.edit.length) {
               this->underlying_event.edit.type = SDL_TEXTEDITING;
               this->underlying_event.edit.timestamp = 0;
@@ -71,12 +71,12 @@ namespace SDL {
         }
 
         TextEditingEvent::TextEditingEvent(const SDL_Event& ev)
-        : BuiltinEvent(ev), start(this->underlying_event.edit.start),
+        : TextInputRelatedEvent(ev), start(this->underlying_event.edit.start),
           length(this->underlying_event.edit.length) {
         }
 
         TextEditingEvent::TextEditingEvent(SDL_Event&& ev)
-        : BuiltinEvent(ev), start(this->underlying_event.edit.start),
+        : TextInputRelatedEvent(ev), start(this->underlying_event.edit.start),
           length(this->underlying_event.edit.length) {
         }
 
@@ -112,14 +112,14 @@ namespace SDL {
             return ssize_t(this->new_length()) - ssize_t(this->length);
         }
 
-        TextInputEvent::TextInputEvent() : BuiltinEvent() {
+        TextInputEvent::TextInputEvent() : TextInputRelatedEvent() {
             this->underlying_event.text.type = SDL_TEXTINPUT;
             this->underlying_event.text.timestamp = 0;
             this->underlying_event.text.windowID = 0;
             this->underlying_event.text.text[0] = '\0';
         }
 
-        TextInputEvent::TextInputEvent(std::string text) : BuiltinEvent() {
+        TextInputEvent::TextInputEvent(std::string text) : TextInputRelatedEvent() {
             this->text(text);
         }
 
