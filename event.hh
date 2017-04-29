@@ -11,8 +11,10 @@
 #include <unordered_map>
 #include <functional>
 
-struct Window {  // TODO: Remove in favour of the real class
-};
+namespace SDL {
+    struct Window {  // TODO: Remove in favour of the real class
+    };
+}
 
 namespace SDL {
     class Event;
