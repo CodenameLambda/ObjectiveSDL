@@ -35,7 +35,8 @@ namespace SDL {
         }
 
         WindowMovedEvent::WindowMovedEvent()
-        : WindowEvent(), x(underlying_event.window.data1), y(underlying_event.window.data2) {
+        : WindowEvent(SDL_WINDOWEVENT_MOVED), x(underlying_event.window.data1),
+          y(underlying_event.window.data2) {
         }
 
         WindowMovedEvent::WindowMovedEvent(const SDL_Event& ev)
@@ -51,12 +52,9 @@ namespace SDL {
             this->y = y;
         }
 
-        WindowMovedEvent::WindowMovedEvent()
-        : WindowEvent(SDL_WINDOWEVENT_MOVED) {
-        }
-
         WindowResizedEvent::WindowResizedEvent()
-        : WindowEvent(), w(underlying_event.window.data1), h(underlying_event.window.data2) {
+        : WindowEvent(SDL_WINDOWEVENT_RESIZED), w(underlying_event.window.data1),
+          h(underlying_event.window.data2) {
         }
 
         WindowResizedEvent::WindowResizedEvent(const SDL_Event& ev)
@@ -73,12 +71,9 @@ namespace SDL {
             this->h = h;
         }
 
-        WindowResizedEvent::WindowResizedEvent()
-        : WindowEvent(SDL_WINDOWEVENT_RESIZED) {
-        }
-
         WindowSizeChangedEvent::WindowSizeChangedEvent()
-        : WindowEvent(), w(underlying_event.window.data1), h(underlying_event.window.data2) {
+        : WindowEvent(SDL_WINDOWEVENT_SIZE_CHANGED), w(underlying_event.window.data1),
+          h(underlying_event.window.data2) {
         }
 
         WindowSizeChangedEvent::WindowSizeChangedEvent(const SDL_Event& ev)
@@ -93,10 +88,6 @@ namespace SDL {
         : WindowSizeChangedEvent() {
             this->w = w;
             this->h = h;
-        }
-
-        WindowSizeChangedEvent::WindowSizeChangedEvent()
-        : WindowEvent(SDL_WINDOWEVENT_SIZE_CHANGED) {
         }
 
         WindowMinimizedEvent::WindowMinimizedEvent()
