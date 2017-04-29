@@ -8,26 +8,30 @@ namespace SDL {
         }
 
         WindowEvent::WindowEvent()
+        : WindowEvent(0) {
+        }
+
+        WindowEvent::WindowEvent(unsigned char event_id)
         : BuiltinEvent() {
             auto& e = this->underlying_event.window;
             e.type = SDL_WINDOWEVENT;
             e.timestamp = 0;
             e.windowID = 0;
-            e.event = this->window_event_id;
+            e.event = event_id;
             e.data1 = 0;
             e.data2 = 0;
         }
 
-        unsigned char WindowShownEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_SHOWN;
+        WindowShownEvent::WindowShownEvent()
+        : WindowEvent(SDL_WINDOWEVENT_SHOWN) {
         }
 
-        unsigned char WindowHiddenEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_HIDDEN;
+        WindowHiddenEvent::WindowHiddenEvent()
+        : WindowEvent(SDL_WINDOWEVENT_HIDDEN) {
         }
 
-        unsigned char WindowExposedEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_EXPOSED;
+        WindowExposedEvent::WindowExposedEvent()
+        : WindowEvent(SDL_WINDOWEVENT_EXPOSED) {
         }
 
         WindowMovedEvent::WindowMovedEvent()
@@ -47,8 +51,8 @@ namespace SDL {
             this->y = y;
         }
 
-        unsigned char WindowMovedEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_MOVED;
+        WindowMovedEvent::WindowMovedEvent()
+        : WindowEvent(SDL_WINDOWEVENT_MOVED) {
         }
 
         WindowResizedEvent::WindowResizedEvent()
@@ -69,8 +73,8 @@ namespace SDL {
             this->h = h;
         }
 
-        unsigned char WindowResizedEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_RESIZED;
+        WindowResizedEvent::WindowResizedEvent()
+        : WindowEvent(SDL_WINDOWEVENT_RESIZED) {
         }
 
         WindowSizeChangedEvent::WindowSizeChangedEvent()
@@ -91,52 +95,52 @@ namespace SDL {
             this->h = h;
         }
 
-        unsigned char WindowSizeChangedEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_SIZE_CHANGED;
+        WindowSizeChangedEvent::WindowSizeChangedEvent()
+        : WindowEvent(SDL_WINDOWEVENT_SIZE_CHANGED) {
         }
 
-        unsigned char WindowMinimizedEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_MINIMIZED;
+        WindowMinimizedEvent::WindowMinimizedEvent()
+        : WindowEvent(SDL_WINDOWEVENT_MINIMIZED) {
         }
 
-        unsigned char WindowMaximizedEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_MAXIMIZED;
+        WindowMaximizedEvent::WindowMaximizedEvent()
+        : WindowEvent(SDL_WINDOWEVENT_MAXIMIZED) {
         }
 
-        unsigned char WindowRestoredEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_RESTORED;
+        WindowRestoredEvent::WindowRestoredEvent()
+        : WindowEvent(SDL_WINDOWEVENT_RESTORED) {
         }
 
-        unsigned char WindowGainedMouseFocusEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_ENTER;
+        WindowGainedMouseFocusEvent::WindowGainedMouseFocusEvent()
+        : WindowEvent(SDL_WINDOWEVENT_ENTER) {
         }
 
-        unsigned char WindowLostMouseFocusEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_LEAVE;
+        WindowLostMouseFocusEvent::WindowLostMouseFocusEvent()
+        : WindowEvent(SDL_WINDOWEVENT_LEAVE) {
         }
 
-        unsigned char WindowGainedKeyboardFocusEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_FOCUS_GAINED;
+        WindowGainedKeyboardFocusEvent::WindowGainedKeyboardFocusEvent()
+        : WindowEvent(SDL_WINDOWEVENT_FOCUS_GAINED) {
         }
 
-        unsigned char WindowLostKeyboardFocusEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_FOCUS_LOST;
+        WindowLostKeyboardFocusEvent::WindowLostKeyboardFocusEvent()
+        : WindowEvent(SDL_WINDOWEVENT_FOCUS_LOST) {
         }
 
-        unsigned char WindowClosedEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_CLOSE;
+        WindowClosedEvent::WindowClosedEvent()
+        : WindowEvent(SDL_WINDOWEVENT_CLOSE) {
         }
 
-        unsigned char WindowFocusOfferedEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_TAKE_FOCUS;
+        WindowFocusOfferedEvent::WindowFocusOfferedEvent()
+        : WindowEvent(SDL_WINDOWEVENT_TAKE_FOCUS) {
         }
 
         void WindowFocusOfferedEvent::take() const {
             SDL_SetWindowInputFocus(SDL_GetWindowFromID(this->underlying_event.wheel.windowID));
         }
 
-        unsigned char WindowHitTestEvent::get_window_event_id() const {
-            return SDL_WINDOWEVENT_RESTORED;
+        WindowHitTestEvent::WindowHitTestEvent()
+        : WindowEvent(SDL_WINDOWEVENT_RESTORED) {
         }
 
         using uchar = unsigned char;

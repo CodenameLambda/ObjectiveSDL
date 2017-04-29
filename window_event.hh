@@ -9,7 +9,7 @@ namespace SDL {
 
         class WindowEvent : public BuiltinEvent {
             protected:
-            virtual unsigned char get_window_event_id() const = 0;
+            WindowEvent(unsigned char event_id);
 
             public:
             using BuiltinEvent::BuiltinEvent;
@@ -19,17 +19,17 @@ namespace SDL {
 
         class WindowShownEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowShownEvent();
         };
 
         class WindowHiddenEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowHiddenEvent();
         };
 
         class WindowExposedEvent : public WindowEvent {  // should be redrawn
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowExposedEvent();
         };
 
         class WindowMovedEvent : public WindowEvent {
@@ -43,8 +43,6 @@ namespace SDL {
             WindowMovedEvent(const SDL_Event& ev);
             WindowMovedEvent(SDL_Event&& ev);
             WindowMovedEvent(const ssize_t x, const ssize_t y);
-
-            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowResizedEvent : public WindowEvent {  // not for API call
@@ -58,8 +56,6 @@ namespace SDL {
             WindowResizedEvent(const SDL_Event& ev);
             WindowResizedEvent(SDL_Event&& ev);
             WindowResizedEvent(const size_t w, const size_t h);
-
-            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowSizeChangedEvent : public WindowEvent {
@@ -73,61 +69,59 @@ namespace SDL {
             WindowSizeChangedEvent(const SDL_Event& ev);
             WindowSizeChangedEvent(SDL_Event&& ev);
             WindowSizeChangedEvent(const size_t w, const size_t h);
-
-            virtual unsigned char get_window_event_id() const;
         };
 
         class WindowMinimizedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowMinimizedEvent();
         };
 
         class WindowMaximizedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowMaximizedEvent();
         };
 
         class WindowRestoredEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowRestoredEvent();
         };
 
         class WindowGainedMouseFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowGainedMouseFocusEvent();
         };
 
         class WindowLostMouseFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowLostMouseFocusEvent();
         };
 
         class WindowGainedKeyboardFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowGainedKeyboardFocusEvent();
         };
 
         class WindowLostKeyboardFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowLostKeyboardFocusEvent();
         };
 
         class WindowClosedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowClosedEvent();
         };
 
         class WindowFocusOfferedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
 
-            virtual unsigned char get_window_event_id() const;
+            WindowFocusOfferedEvent();
 
             void take() const;
         };
 
         class WindowHitTestEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
-            virtual unsigned char get_window_event_id() const;
+            WindowHitTestEvent();
         };
 
         extern const std::unordered_map<unsigned char, std::function<Event*(SDL_Event)>> window_event_types;
