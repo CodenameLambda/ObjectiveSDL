@@ -4,8 +4,7 @@
 namespace SDL {
     namespace events {
         KeyboardEvent::KeyboardEvent()
-        : KeyboardRelatedEvent(), repeat(this->underlying_event.key.repeat),
-          key_symbol(this->underlying_event.key.keysym) {
+        : KeyboardRelatedEvent(), repeat(this->underlying_event.key.repeat) {
               this->underlying_event.key.type = SDL_KEYDOWN;
               this->underlying_event.key.timestamp = 0;
               this->underlying_event.key.windowID = 0;
@@ -14,26 +13,24 @@ namespace SDL {
         }
 
         KeyboardEvent::KeyboardEvent(const SDL_Event& ev)
-        : KeyboardRelatedEvent(ev), repeat(this->underlying_event.key.repeat),
-          key_symbol(this->underlying_event.key.keysym) {
+        : KeyboardRelatedEvent(ev), repeat(this->underlying_event.key.repeat) {
         }
 
         KeyboardEvent::KeyboardEvent(SDL_Event&& ev)
-        : KeyboardRelatedEvent(ev), repeat(this->underlying_event.key.repeat),
-          key_symbol(this->underlying_event.key.keysym) {
+        : KeyboardRelatedEvent(ev), repeat(this->underlying_event.key.repeat) {
         }
 
         KeyboardEvent::KeyboardEvent(
             const unsigned char repeat,
             const bool pressed,
-            const SDL_Keysym key
+            const KeyCombination key
         ) : KeyboardEvent() {
             this->repeat = repeat;
             this->pressed(pressed);
-            this->key_symbol = key;
+            this->key(key);
         }
 
-        KeyboardEvent::KeyboardEvent(const bool pressed, const SDL_Keysym key)
+        KeyboardEvent::KeyboardEvent(const bool pressed, const KeyCombination key)
         : KeyboardEvent(0, pressed, key) {
         }
 
@@ -45,18 +42,22 @@ namespace SDL {
             this->underlying_event.key.state = value? SDL_PRESSED : SDL_RELEASED;
         }
 
-        KeyPressedEvent::KeyPressedEvent(const unsigned char repeat, const SDL_Keysym key)
+        KeyCombination KeyboardEvent::key() const {
+            return Key(this->underlying_event.key.keysym);
+        }
+
+        KeyPressedEvent::KeyPressedEvent(const unsigned char repeat, const KeyCombination key)
         : KeyboardEvent(repeat, true, key) {
         }
 
-        KeyPressedEvent::KeyPressedEvent(const SDL_Keysym key) : KeyboardEvent(true, key) {
+        KeyPressedEvent::KeyPressedEvent(const KeyCombination key) : KeyboardEvent(true, key) {
         }
 
         KeyReleasedEvent::KeyReleasedEvent() : KeyboardEvent() {
             this->pressed(false);
         }
 
-        KeyReleasedEvent::KeyReleasedEvent(const SDL_Keysym key) : KeyboardEvent(false, key) {
+        KeyReleasedEvent::KeyReleasedEvent(const KeyCombination key) : KeyboardEvent(false, key) {
         }
 
         TextEditingEvent::TextEditingEvent()

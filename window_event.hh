@@ -73,47 +73,56 @@ namespace SDL {
 
         class WindowMinimizedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
+            public:
             WindowMinimizedEvent();
         };
 
         class WindowMaximizedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
+            public:
             WindowMaximizedEvent();
         };
 
         class WindowRestoredEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
+            public:
             WindowRestoredEvent();
         };
 
         class WindowGainedMouseFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
+            public:
             WindowGainedMouseFocusEvent();
         };
 
         class WindowLostMouseFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
+            public:
             WindowLostMouseFocusEvent();
         };
 
         class WindowGainedKeyboardFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
+            public:
             WindowGainedKeyboardFocusEvent();
         };
 
         class WindowLostKeyboardFocusEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
+            public:
             WindowLostKeyboardFocusEvent();
         };
 
         class WindowClosedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
+            public:
             WindowClosedEvent();
         };
 
         class WindowFocusOfferedEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
 
+            public:
             WindowFocusOfferedEvent();
 
             void take() const;
@@ -121,6 +130,7 @@ namespace SDL {
 
         class WindowHitTestEvent : public WindowEvent {
             using WindowEvent::WindowEvent;
+            public:
             WindowHitTestEvent();
         };
 

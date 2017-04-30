@@ -2,6 +2,8 @@
 #define OBJSDL_KEYBOARD_EVENT_HH
 #include "event.hh"
 
+#include "keys.hh"
+
 namespace SDL {
     namespace events {
         class KeyboardRelatedEvent : public BuiltinEvent {
@@ -11,15 +13,21 @@ namespace SDL {
         class KeyboardEvent : public KeyboardRelatedEvent {
             public:
             Uint8& repeat;
-            SDL_Keysym& key_symbol;
 
             KeyboardEvent();
             KeyboardEvent(const SDL_Event& ev);
             KeyboardEvent(SDL_Event&& ev);
-            KeyboardEvent(const unsigned char repeat, const bool pressed, const SDL_Keysym key);
-            KeyboardEvent(const bool pressed, const SDL_Keysym key);
+            KeyboardEvent(
+                const unsigned char repeat,
+                const bool pressed,
+                const KeyCombination key
+            );
+            KeyboardEvent(const bool pressed, const KeyCombination key);
             bool pressed() const;
             void pressed(const bool);
+
+            KeyCombination key() const;
+            void key(const KeyCombination);
         };
 
         class KeyPressedEvent : public KeyboardEvent {
@@ -28,11 +36,11 @@ namespace SDL {
             KeyPressedEvent(
                 const unsigned char repeat,
                 const bool pressed,
-                const SDL_Keysym key
+                const KeyCombination key
             ) = delete;
-            KeyPressedEvent(const bool pressed, const SDL_Keysym key) = delete;
-            KeyPressedEvent(const unsigned char repeat, const SDL_Keysym key);
-            KeyPressedEvent(const SDL_Keysym key);
+            KeyPressedEvent(const bool pressed, const KeyCombination key) = delete;
+            KeyPressedEvent(const unsigned char repeat, const KeyCombination key);
+            KeyPressedEvent(const KeyCombination key);
         };
 
         class KeyReleasedEvent : public KeyboardEvent {
@@ -42,10 +50,10 @@ namespace SDL {
             KeyReleasedEvent(
                 const unsigned char repeat,
                 const bool pressed,
-                const SDL_Keysym key
+                const KeyCombination key
             ) = delete;
-            KeyReleasedEvent(const bool pressed, const SDL_Keysym key) = delete;
-            KeyReleasedEvent(const SDL_Keysym key);
+            KeyReleasedEvent(const bool pressed, const KeyCombination key) = delete;
+            KeyReleasedEvent(const KeyCombination key);
         };
 
         class TextInputRelatedEvent : public KeyboardRelatedEvent {

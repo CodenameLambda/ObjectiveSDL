@@ -75,6 +75,7 @@ namespace SDL {
         class ClickEndEvent : public ClickEvent {
             using ClickEvent::ClickEvent;
 
+            public:
             ClickEndEvent();
             ClickEndEvent(
                 const ssize_t x,
