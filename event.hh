@@ -61,7 +61,7 @@ namespace SDL {
 
         template <typename T>
         const T* get() const {
-            const T* casted = dynamic_cast<T*>(*this);
+            const T* casted = dynamic_cast<const T*>(this);
             if (casted == nullptr)
                 throw OtherEventType{};
             return casted;
@@ -69,7 +69,7 @@ namespace SDL {
 
         template <typename T>
         bool holds() const {
-            return dynamic_cast<T*>(*this) != nullptr;
+            return dynamic_cast<const T*>(this) != nullptr;
         }
 
         SDL_Event& get_sdl_event();
@@ -197,6 +197,7 @@ namespace SDL {
 #include "window_event.hh"
 #include "keyboard_event.hh"
 #include "mouse_event.hh"
+#include "joystick_event.hh"
 #include "various_events.hh"
 
 #endif

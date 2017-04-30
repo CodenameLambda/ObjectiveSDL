@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.8)
 
-add_definitions (-std=c++14 -O3 -Os)
+add_definitions (-std=c++14 -O0)
 
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -16,6 +16,7 @@ add_library (ObjSDL
     window_event.cc window_event.hh
     keyboard_event.cc keyboard_event.hh
     mouse_event.cc mouse_event.hh
+    joystick_event.cc joystick_event.hh
     various_events.cc various_events.hh
 )
 
