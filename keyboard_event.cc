@@ -43,7 +43,7 @@ namespace SDL {
         }
 
         KeyCombination KeyboardEvent::key() const {
-            return Key(this->underlying_event.key.keysym);
+            return KeyCombination(this->underlying_event.key.keysym);
         }
 
         KeyPressedEvent::KeyPressedEvent(const unsigned char repeat, const KeyCombination key)
