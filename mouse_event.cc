@@ -51,6 +51,10 @@ namespace SDL {
                 );
         }
 
+        bool MouseMotionEvent::is_touch() const {
+            return this->underlying_event.motion.which != SDL_TOUCH_MOUSEID;
+        }
+
         ClickEvent::ClickEvent()
         : MouseEvent(), x(this->underlying_event.button.x), y(this->underlying_event.button.y),
           clicks(this->underlying_event.button.clicks) {
@@ -93,6 +97,10 @@ namespace SDL {
 
         void ClickEvent::button(const MouseButton btn) {
             this->underlying_event.button.button = size_t(btn);
+        }
+
+        bool ClickEvent::is_touch() const {
+            return this->underlying_event.button.which != SDL_TOUCH_MOUSEID;
         }
 
         ClickEndEvent::ClickEndEvent() : ClickEvent() {
@@ -187,6 +195,10 @@ namespace SDL {
         ScrollEvent::ScrollEvent(ssize_t dx, ssize_t dy) : ScrollEvent() {
             this->dx = dx;
             this->dy = dy;
+        }
+
+        bool ScrollEvent::is_touch() const {
+            return this->underlying_event.wheel.which != SDL_TOUCH_MOUSEID;
         }
     }
 }

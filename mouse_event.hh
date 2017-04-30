@@ -7,6 +7,9 @@ namespace SDL {
     namespace events {
         class MouseEvent : public BuiltinEvent {
             using BuiltinEvent::BuiltinEvent;
+            
+            public:
+            virtual bool is_touch() const = 0;
         };
 
         enum class MouseButton {
@@ -38,6 +41,8 @@ namespace SDL {
             void pressed(const MouseButton, bool);
 
             // TODO: which
+            
+            virtual bool is_touch() const;
         };
 
         class ClickEvent : public MouseEvent {
@@ -59,6 +64,8 @@ namespace SDL {
 
             MouseButton button() const;
             void button(const MouseButton);
+
+            virtual bool is_touch() const;
         };
 
         class ClickBeginEvent : public ClickEvent {
@@ -201,6 +208,8 @@ namespace SDL {
             ScrollEvent(const SDL_Event& ev);
             ScrollEvent(SDL_Event&& ev);
             ScrollEvent(ssize_t dx, ssize_t dy);
+
+            virtual bool is_touch() const;
         };
     }
 }
