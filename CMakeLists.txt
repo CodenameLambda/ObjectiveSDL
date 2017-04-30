@@ -17,6 +17,7 @@ add_library (ObjSDL
     keyboard_event.cc keyboard_event.hh
     mouse_event.cc mouse_event.hh
     joystick_event.cc joystick_event.hh
+    controller_event.cc controller_event.hh
     various_events.cc various_events.hh
 )
 

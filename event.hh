@@ -198,6 +198,7 @@ namespace SDL {
 #include "keyboard_event.hh"
 #include "mouse_event.hh"
 #include "joystick_event.hh"
+#include "controller_event.hh"
 #include "various_events.hh"
 
 #endif
