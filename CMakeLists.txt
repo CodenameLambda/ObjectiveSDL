@@ -20,6 +20,7 @@ add_library (ObjSDL
     controller_event.cc controller_event.hh
     touch_event.cc touch_event.hh
     various_events.cc various_events.hh
+    audio.cc audio.hh
 )
 
 include (cmake/FindSDL2.cmake)
