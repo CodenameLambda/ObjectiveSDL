@@ -1,8 +1,8 @@
 #ifndef OBJSDL_KEYBOARD_EVENT_HH
 #define OBJSDL_KEYBOARD_EVENT_HH
 #include "event.hh"
+#include "../keys.hh"
 
-#include "keys.hh"
 
 namespace SDL {
     namespace events {

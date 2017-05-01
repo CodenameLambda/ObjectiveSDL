@@ -4,6 +4,8 @@ add_definitions (-std=c++14 -O0)
 
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+add_subdirectory (events)
+
 add_library (ObjSDL
     color_names.cc color.cc color.hh  # color_names provides the values for the named colors
     cursor.cc cursor.hh
@@ -12,15 +14,8 @@ add_library (ObjSDL
     clipboard.cc clipboard.hh
     geometry.hh geometry.cc  # header only
     version.cc version.hh
-    event.cc event.hh
-    window_event.cc window_event.hh
-    keyboard_event.cc keyboard_event.hh
-    mouse_event.cc mouse_event.hh
-    joystick_event.cc joystick_event.hh
-    controller_event.cc controller_event.hh
-    touch_event.cc touch_event.hh
-    various_events.cc various_events.hh
     audio.cc audio.hh
+    keys.cc keys.hh
 )
 
 include (cmake/FindSDL2.cmake)
@@ -29,14 +24,11 @@ find_package (Boost COMPONENTS system REQUIRED)
 find_package (SDL2 REQUIRED)
 
 include_directories (${SDL2_INCLUDE_DIR})
+include_directories (${Boost_INCLUDE_DIRS})
 
 link_directories (${Boost_LIBRARY_DIRS})
 
-if (Boost_FOUND)
-    include_directories (${Boost_INCLUDE_DIRS})
-    target_link_libraries (ObjSDL ${Boost_SYSTEM_LIBRARY})
-endif ()
-
+target_link_libraries (ObjSDL ${Boost_SYSTEM_LIBRARY})
 target_link_libraries (ObjSDL ${SDL2_LIBRARY})
 
 install (TARGETS ObjSDL DESTINATION bin)

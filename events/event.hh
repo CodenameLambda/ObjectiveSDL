@@ -10,7 +10,7 @@
 #include <chrono>
 #include <unordered_map>
 #include <functional>
-#include "window.hh"
+#include "../window.hh"
 
 namespace SDL {
     class Event;
