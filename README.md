@@ -8,7 +8,7 @@ The goal of this project is to be able to use every feature of SDL, but in an ob
 
 # Contributing
 
-You can contribute via pull requests, and contact me under dodo2998@gmail.com if you want to get part of the main developers of this project.
+You can contribute via pull requests, and contact me under dodo2998@gmail.com if you want to get one of the main developers of this project.
 
 # Unstable, untested
 
