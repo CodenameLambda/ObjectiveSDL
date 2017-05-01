@@ -1,12 +1,12 @@
 # ObjectiveSDL
 
-## This project is unstable, untested, and the API will likely change in the future!
+### This project is unstable, untested, and the API will likely change in the future!
 
 This is a wrapper around SDL, that allows for object oriented programming.
 
 The goal of this project is to be able to use every feature of SDL, but in an object oriented manner. As said goal is very ambitious, because the whole SDL library is *huge*, this will take a while to get to the point where it is ready for usage.
 
-# A code example that uses ObjectiveSDL
+## A code example that uses ObjectiveSDL
 
 This code example is meant to show, what ObjectiveSDL usage should/could look like in the future.
 
@@ -36,11 +36,11 @@ int main() {
 }
 ```
 
-# Contributing
+## Contributing
 
 You can contribute via pull requests, and contact me under dodo2998@gmail.com if you want to get one of the main developers of this project.
 
-# Unstable, untested
+## Unstable, untested
 
 I am pretty sure that I have made some mistakes, like destructors that free resources that are still needed because the data behind it was copied.
 
