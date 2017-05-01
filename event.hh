@@ -10,11 +10,7 @@
 #include <chrono>
 #include <unordered_map>
 #include <functional>
-
-namespace SDL {
-    struct Window {  // TODO: Remove in favour of the real class
-    };
-}
+#include "window.hh"
 
 namespace SDL {
     class Event;

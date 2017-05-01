@@ -1,0 +1,4 @@
+namespace SDL {
+    struct Window {
+    };
+}
