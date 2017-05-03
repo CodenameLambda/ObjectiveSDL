@@ -30,5 +30,6 @@ link_directories (${Boost_LIBRARY_DIRS})
 
 target_link_libraries (ObjSDL ${Boost_SYSTEM_LIBRARY})
 target_link_libraries (ObjSDL ${SDL2_LIBRARY})
+target_link_libraries (ObjSDL ObjSDL_events)
 
-install (TARGETS ObjSDL DESTINATION bin)
+# install (TARGETS ObjSDL DESTINATION lib)
